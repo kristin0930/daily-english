@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>每日英语 · 每天一组实用词汇 & 句型</title>
+<style>
+  :root{--bg:#0d1117;--card:#161b22;--card2:#1c232d;--line:#2a3340;--text:#e6edf3;--muted:#8b98a9;--accent:#6ea8fe;--a:#7ee787;--warn:#ffb454}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:radial-gradient(1000px 500px at 50% -10%,#1b2430,var(--bg) 55%);color:var(--text);min-height:100vh;padding:28px 18px 40px;display:flex;flex-direction:column;align-items:center}
+  .wrap{width:100%;max-width:560px}
+  h1{font-size:24px;font-weight:800;text-align:center}
+  .date{color:var(--a);font-size:14px;text-align:center;font-weight:700;margin-top:6px}
+  .sub{color:var(--muted);font-size:12.5px;text-align:center;margin:3px 0 18px}
+  .tabs{display:flex;gap:8px;justify-content:center;margin-bottom:14px}
+  .tab{padding:8px 20px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--muted);font-size:14px;font-weight:600;cursor:pointer}
+  .tab.on{background:var(--accent);color:#0d1117;border-color:var(--accent)}
+  .bar{height:6px;background:#222c38;border-radius:999px;overflow:hidden;margin-bottom:6px}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--a));transition:.3s}
+  .meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12.5px;margin-bottom:14px}
+  .meta b{color:var(--a)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px 24px;min-height:300px;display:flex;flex-direction:column;justify-content:center;cursor:pointer;box-shadow:0 10px 34px rgba(0,0,0,.3);transition:.15s}
+  .card:active{transform:scale(.99)}
+  .front{text-align:center}
+  .front .en{font-size:30px;font-weight:800;letter-spacing:.3px}
+  .front .tip{color:var(--muted);font-size:13px;margin-top:14px}
+  .back .en{font-size:22px;font-weight:800;margin-bottom:4px}
+  .back .cn{color:var(--accent);font-size:16px;font-weight:600;margin-bottom:14px}
+  .row{margin:10px 0}
+  .row .lb{font-size:11.5px;color:var(--muted);font-weight:700;letter-spacing:1px}
+  .row .ex-en{font-size:15px;margin-top:2px}
+  .row .ex-cn{font-size:13px;color:var(--muted);margin-top:2px}
+  .row .scene{font-size:13px;color:#cbd5e1;margin-top:2px}
+  .btns{display:flex;gap:10px;margin-top:16px}
+  .btn{flex:1;padding:13px;border-radius:12px;border:1px solid var(--line);background:var(--card2);color:var(--text);font-size:15px;font-weight:700;cursor:pointer}
+  .btn.good{border-color:rgba(126,231,135,.5);color:var(--a)}
+  .btn.again{border-color:rgba(255,180,84,.5);color:var(--warn)}
+  .btn:active{transform:scale(.98)}
+  .foot{display:flex;justify-content:space-between;margin-top:14px}
+  .lnk{color:var(--muted);font-size:13px;background:none;border:none;cursor:pointer;text-decoration:underline}
+  .done{text-align:center;padding:40px 0}
+  .done .big{font-size:40px}
+  .done h2{font-size:20px;margin:10px 0 6px}
+  .done p{color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>每日英语</h1>
+  <div class="date" id="today">—</div>
+  <div class="sub">每天自动更新一组 · 点卡片翻面看释义 · 进度当天自动保存</div>
+
+  <div class="tabs">
+    <div class="tab on" data-deck="words">今日词汇</div>
+    <div class="tab" data-deck="patterns">今日句型</div>
+  </div>
+
+  <div class="bar"><i id="barfill"></i></div>
+  <div class="meta"><span id="pos">1 / 8</span><span>已掌握 <b id="known">0</b></span></div>
+
+  <div id="stage"></div>
+</div>
+
+<script>
+/* =====================================================================
+   每日英语 · 按日期自动轮换
+   原理：下面是完整词库(POOL)。网页根据"当天是第几天"自动切出今日一组，
+   每天 8 个词 + 5 个句型，循环覆盖全部内容。同一天所有人看到的一样，
+   第二天自动换新。纯前端、无需后端、不花钱。
+   ===================================================================== */
+const WORDS_PER_DAY = 8;
+const PATTERNS_PER_DAY = 5;
+
+// ===== 完整词库 =====
+const POOL = {
+  words: [
+    {en:"leverage", cn:"利用 / 发挥（优势）", ex_en:"Let's leverage our existing data to speed this up.", ex_cn:"我们利用现有数据来加快进度。", scene:"会议里讲“借力/发挥”"},
+    {en:"streamline", cn:"精简 / 优化流程", ex_en:"We need to streamline the approval process.", ex_cn:"我们得优化审批流程。", scene:"讲效率、简化流程"},
+    {en:"circle back", cn:"稍后再回来讨论", ex_en:"Let's circle back on this next week.", ex_cn:"这个我们下周再聊。", scene:"暂时搁置、之后再谈"},
+    {en:"touch base", cn:"碰个头 / 简单沟通一下", ex_en:"Let's touch base tomorrow morning.", ex_cn:"我们明早对一下。", scene:"约简短沟通"},
+    {en:"bandwidth", cn:"精力 / 时间（忙不忙）", ex_en:"I don't have the bandwidth to take this on right now.", ex_cn:"我现在没精力接这个。", scene:"婉拒 / 说自己忙"},
+    {en:"on the same page", cn:"达成共识 / 想法一致", ex_en:"I just want to make sure we're on the same page.", ex_cn:"我只是想确认下我们理解一致。", scene:"确认共识"},
+    {en:"ballpark", cn:"大概的估计（数字）", ex_en:"Can you give me a ballpark figure?", ex_cn:"能给个大概数吗？", scene:"要个粗略估算"},
+    {en:"take ownership", cn:"负起责任 / 主导", ex_en:"She took ownership of the whole project.", ex_cn:"她主导并对整个项目负责。", scene:"讲担责、主人翁"},
+    {en:"loop (sb) in", cn:"把某人拉进来 / 同步给某人", ex_en:"Let's loop in the design team on this.", ex_cn:"这事把设计团队也拉进来。", scene:"把相关人加入沟通"},
+    {en:"low-hanging fruit", cn:"容易拿到的成果", ex_en:"Let's start with the low-hanging fruit.", ex_cn:"我们先从容易见效的做起。", scene:"讲优先做简单高回报的"},
+    {en:"move the needle", cn:"带来实质改变 / 见效", ex_en:"This feature won't really move the needle.", ex_cn:"这个功能起不了什么实质作用。", scene:"评估影响大不大"},
+    {en:"deep dive", cn:"深入研究 / 深挖", ex_en:"Let's do a deep dive into the numbers.", ex_cn:"我们把数据深入分析一下。", scene:"提议深入分析"},
+    {en:"align", cn:"对齐 / 达成一致", ex_en:"We need to align with leadership on this.", ex_cn:"这事我们得和管理层对齐。", scene:"讲统一意见"},
+    {en:"push back", cn:"提出反对 / 据理力争", ex_en:"I pushed back on the tight deadline.", ex_cn:"我对紧的截止时间提出了异议。", scene:"表达不同意见"},
+    {en:"heads-up", cn:"提前告知 / 提个醒", ex_en:"Thanks for the heads-up.", ex_cn:"谢谢提前告知。", scene:"感谢/给出预先提醒"},
+    {en:"game changer", cn:"颠覆性的东西 / 改变格局者", ex_en:"This tool is a real game changer.", ex_cn:"这工具真是颠覆性的。", scene:"强调影响巨大"},
+    {en:"pain point", cn:"痛点 / 难受的地方", ex_en:"Slow checkout is a major pain point for users.", ex_cn:"结账慢是用户的一大痛点。", scene:"讲用户/客户的困扰"},
+    {en:"take away", cn:"要点 / 收获（名词 takeaway）", ex_en:"The key takeaway is that we need more data.", ex_cn:"核心结论是我们需要更多数据。", scene:"总结重点"},
+    {en:"on board", cn:"支持 / 加入（认同某事）", ex_en:"Is everyone on board with this plan?", ex_cn:"大家都认同这个计划吗？", scene:"确认是否支持"},
+    {en:"onboarding", cn:"入职培训 / 新手引导", ex_en:"We're improving the user onboarding flow.", ex_cn:"我们在优化新用户引导流程。", scene:"新人/新用户上手"},
+    {en:"follow up", cn:"跟进 / 后续跟踪", ex_en:"I'll follow up with the client tomorrow.", ex_cn:"我明天跟进一下客户。", scene:"后续联系"},
+    {en:"reach out", cn:"主动联系 / 找某人", ex_en:"Feel free to reach out if you have questions.", ex_cn:"有问题随时找我。", scene:"邀请对方联系"},
+    {en:"wrap up", cn:"结束 / 收尾", ex_en:"Let's wrap up the meeting in five minutes.", ex_cn:"我们五分钟内结束会议。", scene:"收尾、结束"},
+    {en:"kick off", cn:"启动 / 开始（项目）", ex_en:"We'll kick off the project next Monday.", ex_cn:"项目下周一启动。", scene:"项目开工"},
+    {en:"pivot", cn:"转向 / 调整方向", ex_en:"The startup decided to pivot to a new market.", ex_cn:"这家创业公司决定转向新市场。", scene:"策略大转向"},
+    {en:"scale up", cn:"扩大规模", ex_en:"Once it works, we'll scale up quickly.", ex_cn:"跑通之后我们会快速扩大规模。", scene:"放大、上量"},
+    {en:"double down", cn:"加倍投入 / 押注", ex_en:"We're doubling down on video content.", ex_cn:"我们要在视频内容上加倍投入。", scene:"加大投入"},
+    {en:"roll out", cn:"推出 / 上线", ex_en:"We'll roll out the feature to all users next week.", ex_cn:"下周我们向全部用户上线这个功能。", scene:"发布、铺开"},
+    {en:"break down", cn:"拆解 / 分解", ex_en:"Let me break down the budget for you.", ex_cn:"我给你把预算拆解一下。", scene:"分项说明"},
+    {en:"in the loop", cn:"知情 / 在沟通圈内", ex_en:"Keep me in the loop on any updates.", ex_cn:"有进展随时同步给我。", scene:"要求被同步信息"},
+    {en:"out of the loop", cn:"不知情 / 被漏掉", ex_en:"Sorry, I've been out of the loop on this.", ex_cn:"抱歉，这事我一直没跟上。", scene:"承认自己没跟进"},
+    {en:"nail it", cn:"搞定 / 做得很棒", ex_en:"You totally nailed the presentation.", ex_cn:"你这次演讲太棒了。", scene:"夸做得好"},
+    {en:"drop the ball", cn:"搞砸 / 掉链子", ex_en:"I dropped the ball on that email, sorry.", ex_cn:"那封邮件我疏忽了，抱歉。", scene:"承认失误"},
+    {en:"ramp up", cn:"加速 / 加大力度", ex_en:"We need to ramp up production before the holidays.", ex_cn:"假期前我们得加大产量。", scene:"提速、增量"},
+    {en:"cut corners", cn:"偷工减料 / 走捷径", ex_en:"We can't cut corners on quality.", ex_cn:"质量上不能偷工减料。", scene:"警告别图省事"},
+    {en:"bottleneck", cn:"瓶颈 / 卡点", ex_en:"Approvals are the main bottleneck here.", ex_cn:"审批是这里最大的卡点。", scene:"指出流程堵点"},
+    {en:"workaround", cn:"变通办法 / 临时方案", ex_en:"There's a quick workaround for that bug.", ex_cn:"那个 bug 有个临时的变通办法。", scene:"临时绕过问题"},
+    {en:"tradeoff", cn:"取舍 / 权衡", ex_en:"There's always a tradeoff between speed and quality.", ex_cn:"速度和质量之间总要取舍。", scene:"讲利弊权衡"},
+    {en:"actionable", cn:"可执行的 / 能落地的", ex_en:"Give me actionable feedback, not just complaints.", ex_cn:"给我能落地的反馈，别光抱怨。", scene:"强调可操作性"},
+    {en:"buy-in", cn:"支持 / 认同（尤指上级）", ex_en:"We need buy-in from senior management first.", ex_cn:"我们得先拿到高层的支持。", scene:"争取认可"},
+    {en:"stakeholder", cn:"利益相关方", ex_en:"Let's get all the stakeholders in one room.", ex_cn:"把所有相关方都叫到一起。", scene:"多方参与的人"},
+    {en:"deliverable", cn:"交付物 / 成果", ex_en:"What are the deliverables for this phase?", ex_cn:"这个阶段的交付物是什么？", scene:"明确产出"},
+    {en:"milestone", cn:"里程碑 / 关键节点", ex_en:"Hitting this milestone is huge for the team.", ex_cn:"达成这个里程碑对团队意义重大。", scene:"重要节点"},
+    {en:"turnaround", cn:"周转 / 完成所需时间", ex_en:"What's the typical turnaround time?", ex_cn:"一般多久能完成？", scene:"问处理时长"},
+    {en:"ping", cn:"发消息 / 呼一下（某人）", ex_en:"Just ping me when you're ready.", ex_cn:"你好了发我个消息就行。", scene:"轻量通知"},
+    {en:"sync up", cn:"同步一下 / 对齐信息", ex_en:"Let's sync up after lunch.", ex_cn:"午饭后我们同步一下。", scene:"约对齐"},
+    {en:"take a rain check", cn:"改天再约（这次不行）", ex_en:"Can I take a rain check on dinner?", ex_cn:"晚饭能改天吗？", scene:"礼貌推迟"},
+    {en:"no-brainer", cn:"显而易见的选择 / 不用想", ex_en:"Buying it at that price is a no-brainer.", ex_cn:"这价格买它根本不用想。", scene:"强调理所当然"},
+    {en:"ramp", cn:"上手期 / 爬坡", ex_en:"New hires need a few weeks to ramp.", ex_cn:"新员工需要几周才能上手。", scene:"讲适应/成长期"},
+    {en:"table (an idea)", cn:"搁置 / 暂缓讨论（美式）", ex_en:"Let's table this discussion for now.", ex_cn:"这个讨论我们先放一放。", scene:"暂停某议题"},
+    {en:"flag", cn:"提出 / 标记（提醒注意）", ex_en:"I want to flag a potential risk here.", ex_cn:"我想提醒一个潜在风险。", scene:"提请注意"},
+    {en:"escalate", cn:"上报 / 升级处理", ex_en:"If it's not resolved, we'll escalate it.", ex_cn:"如果还不解决，我们就上报。", scene:"往上反映"},
+    {en:"scope", cn:"范围 / 界定范围", ex_en:"That's out of scope for this release.", ex_cn:"那不在这个版本的范围内。", scene:"划定边界"},
+    {en:"revisit", cn:"重新审视 / 再讨论", ex_en:"Let's revisit this after the launch.", ex_cn:"上线之后我们再看这个。", scene:"以后再议"},
+    {en:"prioritize", cn:"排优先级 / 优先处理", ex_en:"We need to prioritize the critical bugs.", ex_cn:"我们得优先处理严重 bug。", scene:"分主次"},
+    {en:"clarify", cn:"澄清 / 说清楚", ex_en:"Could you clarify what you mean?", ex_cn:"你能说清楚一点吗？", scene:"请对方讲明白"},
+    {en:"walk (sb) through", cn:"带某人过一遍 / 详细讲解", ex_en:"Let me walk you through the setup.", ex_cn:"我带你把设置过一遍。", scene:"手把手讲"},
+    {en:"a heads start", cn:"抢先一步（head start）", ex_en:"Starting early gives us a head start.", ex_cn:"早点开始能让我们抢占先机。", scene:"领先优势"},
+    {en:"across the board", cn:"全面地 / 各方面", ex_en:"Sales are up across the board.", ex_cn:"各条线销售都在涨。", scene:"讲整体、普遍"},
+    {en:"in a nutshell", cn:"简而言之", ex_en:"In a nutshell, the plan works.", ex_cn:"简而言之，这方案行得通。", scene:"一句话总结"},
+    {en:"on the fly", cn:"临时 / 现场即兴", ex_en:"We had to change the plan on the fly.", ex_cn:"我们不得不临时改计划。", scene:"即时应变"},
+    {en:"back to square one", cn:"回到原点 / 从头再来", ex_en:"The deal fell through, so we're back to square one.", ex_cn:"交易黄了，我们又得从头来。", scene:"前功尽弃"},
+    {en:"raise the bar", cn:"提高标准", ex_en:"This launch really raised the bar.", ex_cn:"这次发布把标准拉高了。", scene:"设更高要求"},
+    {en:"keep (sb) posted", cn:"随时告知进展", ex_en:"I'll keep you posted on the results.", ex_cn:"结果我会随时告诉你。", scene:"承诺同步进展"}
+  ],
+  patterns: [
+    {en:"I'd appreciate it if you could ...", cn:"如果你能……我会很感激（委婉请求）", ex_en:"I'd appreciate it if you could review this by Friday.", ex_cn:"如果你能周五前看一下，我会很感激。", scene:"礼貌地提请求"},
+    {en:"Just to make sure we're on the same page, ...", cn:"为了确认我们理解一致，……", ex_en:"Just to make sure we're on the same page, you'll handle the deck?", ex_cn:"确认一下，PPT 你来做对吧？", scene:"对齐确认"},
+    {en:"Would it be possible to ...?", cn:"有没有可能……？（礼貌询问）", ex_en:"Would it be possible to move the meeting to 3pm?", ex_cn:"会议能不能挪到下午三点？", scene:"礼貌询问可能性"},
+    {en:"I wanted to follow up on ...", cn:"我想跟进一下……", ex_en:"I wanted to follow up on my last email.", ex_cn:"我想跟进一下上封邮件。", scene:"跟进事项"},
+    {en:"Correct me if I'm wrong, but ...", cn:"如果我说错请纠正，不过……（委婉表达观点）", ex_en:"Correct me if I'm wrong, but this looks over budget.", ex_cn:"如果我理解有误请纠正，但这看起来超预算了。", scene:"委婉提出看法"},
+    {en:"That said, ...", cn:"话虽如此，……（话锋一转）", ex_en:"It's risky. That said, the upside is huge.", ex_cn:"有风险。话虽如此，回报也很大。", scene:"转折、补充"},
+    {en:"To give you some context, ...", cn:"先交代下背景，……", ex_en:"To give you some context, this started last quarter.", ex_cn:"先说下背景，这事从上季度开始的。", scene:"补充背景"},
+    {en:"Let's take a step back and ...", cn:"我们退一步，……", ex_en:"Let's take a step back and look at the big picture.", ex_cn:"我们退一步看看全局。", scene:"跳出细节看整体"},
+    {en:"I'm not sure I follow. Could you ...?", cn:"我没太跟上，你能……吗？", ex_en:"I'm not sure I follow. Could you walk me through it?", ex_cn:"我没太懂，你能带我过一遍吗？", scene:"没听懂、请再解释"},
+    {en:"Long story short, ...", cn:"长话短说，……", ex_en:"Long story short, we missed the deadline.", ex_cn:"长话短说，我们错过了截止时间。", scene:"简短总结"},
+    {en:"Do you have a moment to ...?", cn:"你有空……一下吗？", ex_en:"Do you have a moment to go over this?", ex_cn:"你有空过一下这个吗？", scene:"礼貌约时间"},
+    {en:"I just wanted to check in on ...", cn:"我就是想问一下……的进展", ex_en:"I just wanted to check in on the report.", ex_cn:"我就是想问下报告的进展。", scene:"轻量跟进"},
+    {en:"Let me get back to you on that.", cn:"这个我回头答复你。", ex_en:"Good question — let me get back to you on that.", ex_cn:"好问题，这个我回头答复你。", scene:"暂时无法回答"},
+    {en:"From my perspective, ...", cn:"在我看来，……", ex_en:"From my perspective, the timing isn't right.", ex_cn:"在我看来，时机还不对。", scene:"表达个人观点"},
+    {en:"It might be worth ...ing", cn:"或许值得……", ex_en:"It might be worth testing this with a small group first.", ex_cn:"或许值得先在小范围测一下。", scene:"委婉建议"},
+    {en:"Can we align on ...?", cn:"我们能就……对齐一下吗？", ex_en:"Can we align on the priorities first?", ex_cn:"我们能先对齐一下优先级吗？", scene:"提议达成一致"},
+    {en:"I see where you're coming from, but ...", cn:"我理解你的出发点，但……", ex_en:"I see where you're coming from, but the data says otherwise.", ex_cn:"我理解你的意思，但数据不是这样的。", scene:"先共情再反驳"},
+    {en:"What's the best way to ...?", cn:"……最好的方式是什么？", ex_en:"What's the best way to reach you?", ex_cn:"联系你最方便的方式是什么？", scene:"礼貌询问方式"},
+    {en:"Let's play it by ear.", cn:"我们看情况再定吧。", ex_en:"We don't need a fixed plan — let's play it by ear.", ex_cn:"不用定死计划，看情况再说。", scene:"随机应变"},
+    {en:"I'll take care of it.", cn:"这事交给我。", ex_en:"Don't worry, I'll take care of it.", ex_cn:"别担心，这事我来处理。", scene:"主动担责"},
+    {en:"Could you give me a hand with ...?", cn:"你能帮我一下……吗？", ex_en:"Could you give me a hand with this report?", ex_cn:"你能帮我弄下这份报告吗？", scene:"请求帮忙"},
+    {en:"Let me know if this works for you.", cn:"你看这样行不行，告诉我。", ex_en:"I'll book 2pm — let me know if this works for you.", ex_cn:"我订两点，你看行不行告诉我。", scene:"确认对方是否方便"},
+    {en:"I'm on it.", cn:"我这就去办。", ex_en:"You need it by noon? I'm on it.", ex_cn:"中午前要？我这就去办。", scene:"立即行动"},
+    {en:"Just a quick heads-up: ...", cn:"简单提醒一下：……", ex_en:"Just a quick heads-up: the office closes early today.", ex_cn:"简单提醒下：今天办公室提前关门。", scene:"预先告知"},
+    {en:"How does that sound?", cn:"你觉得怎么样？", ex_en:"We'll split the work evenly. How does that sound?", ex_cn:"活儿我们平分，你觉得怎么样？", scene:"征求意见"},
+    {en:"Let's touch base later this week.", cn:"这周晚点我们对一下。", ex_en:"No rush — let's touch base later this week.", ex_cn:"不急，这周晚点我们碰一下。", scene:"约后续沟通"},
+    {en:"I'd rather ... than ...", cn:"我宁愿……也不……", ex_en:"I'd rather delay it than ship something broken.", ex_cn:"我宁愿推迟也不发一个有问题的东西。", scene:"表达偏好取舍"},
+    {en:"To be honest, ...", cn:"说实话，……", ex_en:"To be honest, I think we're overthinking this.", ex_cn:"说实话，我觉得我们想多了。", scene:"坦率表态"},
+    {en:"Let's not reinvent the wheel.", cn:"我们别重复造轮子。", ex_en:"There's a template already — let's not reinvent the wheel.", ex_cn:"已经有模板了，别重复造轮子。", scene:"别做无用功"},
+    {en:"Can you walk me through your thinking?", cn:"你能讲讲你的思路吗？", ex_en:"Interesting call — can you walk me through your thinking?", ex_cn:"有意思的决定，你能讲讲思路吗？", scene:"请对方解释逻辑"},
+    {en:"Let's circle back once we have more data.", cn:"等有更多数据我们再聊。", ex_en:"It's too early — let's circle back once we have more data.", ex_cn:"现在太早，等有数据再聊。", scene:"推迟到条件成熟"},
+    {en:"I'll keep you posted.", cn:"我会随时告诉你进展。", ex_en:"As soon as I hear back, I'll keep you posted.", ex_cn:"一有回音我就告诉你。", scene:"承诺同步"},
+    {en:"Do you mind if I ...?", cn:"我……你介意吗？", ex_en:"Do you mind if I jump in here?", ex_cn:"我插一句你介意吗？", scene:"礼貌插话/请求"},
+    {en:"Let's make it happen.", cn:"我们把它做成。", ex_en:"Great plan — let's make it happen.", ex_cn:"好计划，我们把它落地。", scene:"鼓劲、推进"},
+    {en:"That works for me.", cn:"我这边没问题。", ex_en:"Tuesday at 10? That works for me.", ex_cn:"周二十点？我没问题。", scene:"表示同意"},
+    {en:"Let me double-check and get back to you.", cn:"我再确认一下回复你。", ex_en:"I'm not 100% sure — let me double-check and get back to you.", ex_cn:"我不太确定，我核实下再回你。", scene:"谨慎确认"},
+    {en:"Bear with me for a second.", cn:"稍等我一下 / 请耐心一下。", ex_en:"Bear with me for a second while I pull up the file.", ex_cn:"稍等我一下，我把文件调出来。", scene:"请对方稍候"},
+    {en:"Let's put a pin in that.", cn:"这个先记一下、待会儿再说。", ex_en:"Good point — let's put a pin in that for now.", ex_cn:"好观点，先记着待会儿再说。", scene:"暂存话题"},
+    {en:"I'll loop you in.", cn:"我会把你拉进来（同步给你）。", ex_en:"Once it's scheduled, I'll loop you in.", ex_cn:"定好时间我就把你拉进来。", scene:"承诺同步相关人"},
+    {en:"Let's touch base offline.", cn:"我们私下 / 会后单独聊。", ex_en:"This is a big topic — let's touch base offline.", ex_cn:"这话题挺大，我们会后单独聊。", scene:"移到会外沟通"}
+  ]
+};
+
+/* ===== 计算“今天是第几天”，切出今日一组 ===== */
+function beijingDayIndex(){
+  // 用北京时间的日期算“天数序号”，保证同一天所有人一致
+  const nowUTC = Date.now();
+  const bj = new Date(nowUTC + 8*3600*1000); // 偏到北京时间
+  const y = bj.getUTCFullYear(), m = bj.getUTCMonth(), d = bj.getUTCDate();
+  return Math.floor(Date.UTC(y, m, d) / (86400*1000)); // 距 1970-01-01 的天数
+}
+function pickToday(arr, perDay, dayIdx){
+  const n = arr.length;
+  const start = (dayIdx * perDay) % n;
+  const out = [];
+  for(let i=0;i<perDay;i++){ out.push(arr[(start+i)%n]); }
+  return out;
+}
+function dateLabel(){
+  const bj = new Date(Date.now() + 8*3600*1000);
+  const y=bj.getUTCFullYear(), m=bj.getUTCMonth()+1, d=bj.getUTCDate();
+  const wk=["周日","周一","周二","周三","周四","周五","周六"][bj.getUTCDay()];
+  return `${y}年${m}月${d}日 · ${wk}`;
+}
+
+const DAY = beijingDayIndex();
+const DATESTR = dateLabel();
+const DATA = {
+  words: pickToday(POOL.words, WORDS_PER_DAY, DAY),
+  patterns: pickToday(POOL.patterns, PATTERNS_PER_DAY, DAY)
+};
+
+/* ===== 逻辑 ===== */
+let deck = "words";
+let idx = 0;
+let flipped = false;
+const KEY = "daily-en-known-" + DAY;   // 进度按“天”存，第二天自动是新的一组
+let known = JSON.parse(localStorage.getItem(KEY) || "{}");
+
+function list(){ return DATA[deck]; }
+function knownSet(){ known[deck] = known[deck] || []; return known[deck]; }
+function save(){ localStorage.setItem(KEY, JSON.stringify(known)); }
+
+function render(){
+  const arr = list(), n = arr.length;
+  document.getElementById("pos").textContent = (Math.min(idx,n-1)+1) + " / " + n;
+  document.getElementById("known").textContent = knownSet().length;
+  document.getElementById("barfill").style.width = Math.round(knownSet().length/n*100) + "%";
+  const stage = document.getElementById("stage");
+
+  if(idx >= n){
+    stage.innerHTML = `<div class="card"><div class="done"><div class="big">🎉</div>
+      <h2>今日这组过完啦</h2><p>已掌握 ${knownSet().length}/${n} · 明天自动换新一组</p>
+      <div class="btns" style="margin-top:18px"><button class="btn" onclick="restart(false)">再过一遍</button>
+      <button class="btn good" onclick="restart(true)">洗牌重练</button></div></div></div>`;
+    return;
+  }
+  const item = arr[idx];
+  const isKnown = knownSet().includes(item.en);
+  if(!flipped){
+    stage.innerHTML = `<div class="card" onclick="flip()">
+      <div class="front"><div class="en">${item.en}</div>
+      <div class="tip">${isKnown?'✓ 已掌握 · ':''}点一下看释义和例句 👆</div></div></div>`;
+  } else {
+    stage.innerHTML = `<div class="card">
+      <div class="back">
+        <div class="en">${item.en}</div>
+        <div class="cn">${item.cn}</div>
+        <div class="row"><div class="lb">例句</div><div class="ex-en">${item.ex_en}</div><div class="ex-cn">${item.ex_cn}</div></div>
+        <div class="row"><div class="lb">场景</div><div class="scene">${item.scene}</div></div>
+      </div>
+      <div class="btns">
+        <button class="btn again" onclick="mark(false)">✗ 再练</button>
+        <button class="btn good" onclick="mark(true)">✓ 记住了</button>
+      </div>
+      <div class="foot"><button class="lnk" onclick="prev()">← 上一个</button><button class="lnk" onclick="next()">跳过 →</button></div>
+    </div>`;
+  }
+}
+function flip(){ flipped = true; render(); }
+function next(){ idx++; flipped=false; render(); }
+function prev(){ if(idx>0){idx--; flipped=false; render();} }
+function mark(good){
+  const item = list()[idx];
+  const s = knownSet();
+  if(good){ if(!s.includes(item.en)) s.push(item.en); }
+  else { const i=s.indexOf(item.en); if(i>=0) s.splice(i,1); }
+  save(); next();
+}
+function restart(shuffle){
+  idx=0; flipped=false;
+  if(shuffle){ DATA[deck].sort(()=>Math.random()-0.5); }
+  render();
+}
+document.querySelectorAll(".tab").forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
+    t.classList.add("on");
+    deck = t.dataset.deck; idx=0; flipped=false; render();
+  };
+});
+document.getElementById("today").textContent = DATESTR;
+render();
+</script>
+</body>
+</html>

@@ -10,7 +10,14 @@
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#eaf4ff;color:var(--ink);min-height:100vh;padding:26px 16px 46px;display:flex;flex-direction:column;align-items:center;position:relative;overflow-x:hidden}
   body::before{content:"";position:fixed;inset:0;background:url("bg.jpg") center top/cover no-repeat;z-index:0}
-  body::after{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,.62) 55%,rgba(255,255,255,.8));z-index:0}
+  body::after{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(12,16,38,.05) 0%,rgba(255,255,255,.08) 30%,rgba(255,255,255,.55) 56%,rgba(255,255,255,.82) 78%);z-index:0}
+  /* ===== 星光闪烁 + 流星 动效层 ===== */
+  #sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  #sky .star{position:absolute;background:#fff;border-radius:50%;opacity:.85;animation:twinkle var(--tw,3s) ease-in-out infinite;box-shadow:0 0 6px rgba(255,255,255,.9)}
+  @keyframes twinkle{0%,100%{opacity:.15;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}}
+  #sky .meteor{position:absolute;width:2px;height:2px;background:linear-gradient(#fff,rgba(255,255,255,0));border-radius:50%;filter:drop-shadow(0 0 6px #fff);opacity:0}
+  #sky .meteor::after{content:"";position:absolute;top:0;left:0;width:120px;height:1.5px;background:linear-gradient(90deg,rgba(255,255,255,.9),rgba(255,255,255,0));transform:rotate(35deg);transform-origin:left center}
+  @keyframes shoot{0%{transform:translate(0,0);opacity:0}8%{opacity:1}55%{opacity:1}100%{transform:translate(-320px,230px);opacity:0}}
   .wrap{width:100%;max-width:560px;position:relative;z-index:1}
   h1{font-size:32px;font-weight:900;text-align:center;letter-spacing:.5px;background:linear-gradient(90deg,#10b981,#3b82f6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .date{color:var(--mint);font-size:14px;text-align:center;font-weight:800;margin-top:8px}
@@ -59,9 +66,28 @@
   .done .big{font-size:52px}
   .done h2{font-size:22px;margin:12px 0 6px;color:var(--ink)}
   .done p{color:var(--muted);font-size:14px}
+  /* ===== 记忆曲线模块 ===== */
+  .mem-card{background:rgba(255,255,255,.9);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:22px;padding:20px 18px 18px;margin-top:20px;box-shadow:0 14px 40px rgba(30,64,140,.12)}
+  .mem-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:4px;margin-bottom:6px}
+  .mem-title{font-size:17px;font-weight:900;color:var(--ink)}
+  .mem-sub{font-size:11.5px;color:var(--faint);font-weight:600}
+  .mem-chart-box{position:relative;width:100%;margin:10px 0 6px}
+  #memChart{width:100%;height:180px;display:block}
+  .mem-legend{display:flex;gap:16px;justify-content:center;font-size:11.5px;color:var(--muted);margin:2px 0 14px;flex-wrap:wrap}
+  .mem-legend i{display:inline-block;width:14px;height:0;border-top-width:3px;border-top-style:solid;vertical-align:middle;margin-right:5px;border-radius:2px}
+  .mem-legend .l-rev i{border-top-color:#10b981}
+  .mem-legend .l-forget i{border-top-color:#f59e0b;border-top-style:dashed}
+  .mem-legend .l-you i{border-top:none;width:9px;height:9px;border-radius:50%;background:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.25)}
+  .mem-stats{display:flex;gap:10px}
+  .mem-stats .ms{flex:1;background:#f7fafd;border:1px solid #eef3f8;border-radius:14px;padding:12px 8px;text-align:center}
+  .mem-stats .ms b{display:block;font-size:22px;font-weight:900;background:linear-gradient(90deg,#10b981,#3b82f6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1}
+  .mem-stats .ms span{display:block;font-size:11px;color:var(--muted);margin-top:4px;font-weight:600}
+  .mem-tip{font-size:12px;color:#334155;text-align:center;margin-top:12px;line-height:1.6;background:#eef7ff;border-radius:12px;padding:10px 12px}
+  .mem-tip b{color:var(--sky)}
 </style>
 </head>
 <body>
+<div id="sky"></div>
 <div class="wrap">
   <h1>陈斌每日英语</h1>
   <div class="date" id="today">—</div>
@@ -76,6 +102,25 @@
   <div class="meta"><span id="pos">1 / 8</span><span>已掌握 <b id="known">0</b></span></div>
 
   <div id="stage"></div>
+
+  <div class="mem-card" id="memCard">
+    <div class="mem-head">
+      <div class="mem-title">🧠 记忆曲线</div>
+      <div class="mem-sub">艾宾浩斯遗忘规律 · 按时复习记得更牢</div>
+    </div>
+    <div class="mem-chart-box"><canvas id="memChart"></canvas></div>
+    <div class="mem-legend">
+      <span class="l-rev"><i></i>按时复习</span>
+      <span class="l-forget"><i></i>不复习</span>
+      <span class="l-you"><i></i>你现在</span>
+    </div>
+    <div class="mem-stats">
+      <div class="ms"><b id="msLearned">0</b><span>累计学过</span></div>
+      <div class="ms"><b id="msRetain">—</b><span>当前记忆强度</span></div>
+      <div class="ms"><b id="msDue">0</b><span>今日待巩固</span></div>
+    </div>
+    <div class="mem-tip" id="memTip">开始学习后，这里会显示你的记忆强度变化 👆</div>
+  </div>
 </div>
 
 <script>
@@ -306,9 +351,9 @@ function prev(){ if(idx>0){idx--; flipped=false; render();} }
 function mark(good){
   const item = list()[idx];
   const s = knownSet();
-  if(good){ if(!s.includes(item.en)) s.push(item.en); }
+  if(good){ if(!s.includes(item.en)) s.push(item.en); recordReview(item.en); }
   else { const i=s.indexOf(item.en); if(i>=0) s.splice(i,1); }
-  save(); next();
+  save(); drawMemory(); next();
 }
 function restart(shuffle){
   idx=0; flipped=false;
@@ -323,7 +368,136 @@ document.querySelectorAll(".tab").forEach(t=>{
   };
 });
 document.getElementById("today").textContent = DATESTR;
+
+/* ===== 星空：闪烁星点 + 流星 ===== */
+(function buildSky(){
+  const sky = document.getElementById("sky");
+  if(!sky) return;
+  const H = Math.max(window.innerHeight, 700);
+  const topZone = H * 0.5;              // 星点集中在上半屏（露出星空区）
+  const n = window.innerWidth < 480 ? 46 : 70;
+  let html = "";
+  for(let i=0;i<n;i++){
+    const size = (Math.random()*2.2 + 0.6).toFixed(1);
+    const left = (Math.random()*100).toFixed(2);
+    const top  = (Math.random()*topZone).toFixed(0);
+    const dur  = (Math.random()*3 + 2).toFixed(1);
+    const delay= (Math.random()*4).toFixed(1);
+    html += `<span class="star" style="width:${size}px;height:${size}px;left:${left}%;top:${top}px;--tw:${dur}s;animation-delay:${delay}s"></span>`;
+  }
+  sky.innerHTML = html;
+  // 流星：随机间隔从上方划过
+  function shootMeteor(){
+    const m = document.createElement("div");
+    m.className = "meteor";
+    m.style.left = (30 + Math.random()*60) + "%";
+    m.style.top  = (Math.random()*topZone*0.6) + "px";
+    m.style.animation = `shoot ${ (1.1+Math.random()*0.8).toFixed(2) }s linear`;
+    sky.appendChild(m);
+    setTimeout(()=>m.remove(), 2200);
+    setTimeout(shootMeteor, 3500 + Math.random()*5000);
+  }
+  setTimeout(shootMeteor, 1800);
+})();
+
+/* ===== 记忆曲线引擎（艾宾浩斯 + 间隔复习） ===== */
+const MEM_KEY = "daily-en-memlog";     // { "<word>": [dayIdx, dayIdx, ...] } 跨天累计
+function loadMem(){ try{ return JSON.parse(localStorage.getItem(MEM_KEY)||"{}"); }catch(e){ return {}; } }
+function saveMem(m){ localStorage.setItem(MEM_KEY, JSON.stringify(m)); }
+function recordReview(word){
+  const m = loadMem();
+  const arr = m[word] || (m[word]=[]);
+  if(arr[arr.length-1] !== DAY) arr.push(DAY);   // 同一天不重复计
+  saveMem(m);
+}
+// 稳定度：复习次数越多，记忆保持越久（间隔效应）
+function stability(n){ return 1.6 * Math.pow(1.9, Math.max(0,n-1)); }
+// 单词当前留存率 R = e^(-经过天数 / 稳定度)
+function retentionOf(reviews){
+  if(!reviews||!reviews.length) return 0;
+  const n = reviews.length;
+  const d = Math.max(0, DAY - reviews[reviews.length-1]);
+  return Math.exp(-d / stability(n));
+}
+function memStats(){
+  const m = loadMem();
+  const words = Object.keys(m);
+  if(!words.length) return {learned:0, retain:null, due:0, avgGap:0};
+  let sum=0, due=0, gapSum=0;
+  words.forEach(w=>{
+    const r = retentionOf(m[w]); sum += r;
+    if(r < 0.65) due++;
+    gapSum += Math.max(0, DAY - m[w][m[w].length-1]);
+  });
+  return {learned:words.length, retain:sum/words.length, due, avgGap:gapSum/words.length};
+}
+
+function drawMemory(){
+  const st = memStats();
+  document.getElementById("msLearned").textContent = st.learned;
+  document.getElementById("msRetain").textContent = st.retain==null ? "—" : Math.round(st.retain*100)+"%";
+  document.getElementById("msDue").textContent = st.due;
+  const tip = document.getElementById("memTip");
+  if(st.learned===0){ tip.innerHTML = '开始学习后，这里会显示你的记忆强度变化 👆'; }
+  else if(st.due>0){ tip.innerHTML = `你有 <b>${st.due}</b> 个词记忆正在衰退，<b>今天再过一遍</b>能把曲线重新拉满 🔁`; }
+  else { tip.innerHTML = `记忆强度 <b>${Math.round(st.retain*100)}%</b>，保持得很好！按 1→3→7→15 天节奏复习最省力 🌟`; }
+
+  const cv = document.getElementById("memChart");
+  const dpr = window.devicePixelRatio || 1;
+  const cssW = cv.clientWidth || 320, cssH = 180;
+  cv.width = cssW*dpr; cv.height = cssH*dpr;
+  const ctx = cv.getContext("2d"); ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,cssW,cssH);
+
+  const padL=34, padR=12, padT=14, padB=26;
+  const W = cssW-padL-padR, Hc = cssH-padT-padB;
+  const DAYS = 30;
+  const X = t => padL + (t/DAYS)*W;
+  const Y = r => padT + (1-r)*Hc;
+
+  // 网格 + Y 轴刻度
+  ctx.strokeStyle="#eef3f8"; ctx.fillStyle="#94a3b8"; ctx.font="10px -apple-system,sans-serif";
+  [0,.25,.5,.75,1].forEach(r=>{
+    ctx.beginPath(); ctx.moveTo(padL,Y(r)); ctx.lineTo(padL+W,Y(r)); ctx.stroke();
+    ctx.fillText(Math.round(r*100)+"%", 4, Y(r)+3);
+  });
+  // X 轴天数
+  ctx.textAlign="center";
+  [0,7,15,30].forEach(t=>{ ctx.fillText(t+"天", X(t), cssH-8); });
+  ctx.textAlign="start";
+
+  // 遗忘曲线（不复习）——橙色虚线
+  ctx.strokeStyle="#f59e0b"; ctx.lineWidth=2; ctx.setLineDash([5,4]); ctx.beginPath();
+  for(let t=0;t<=DAYS;t++){ const r=Math.exp(-t/1.8); (t?ctx.lineTo(X(t),Y(r)):ctx.moveTo(X(t),Y(r))); }
+  ctx.stroke(); ctx.setLineDash([]);
+
+  // 间隔复习曲线——绿色实线（在 1/3/7/15 天复习，每次拉回满格且衰减更慢）
+  const reviewDays=[0,1,3,7,15]; ctx.strokeStyle="#10b981"; ctx.lineWidth=2.6; ctx.beginPath();
+  let started=false;
+  for(let t=0;t<=DAYS;t++){
+    // 找到 t 之前最近一次复习
+    let last=0, n=0;
+    for(let k=0;k<reviewDays.length;k++){ if(reviewDays[k]<=t){ last=reviewDays[k]; n=k+1; } }
+    const r = Math.exp(-(t-last)/stability(n));
+    started?ctx.lineTo(X(t),Y(r)):ctx.moveTo(X(t),Y(r)); started=true;
+  }
+  ctx.stroke();
+  // 复习点小圆
+  ctx.fillStyle="#10b981";
+  reviewDays.forEach(t=>{ ctx.beginPath(); ctx.arc(X(t),Y(1),3,0,7); ctx.fill(); });
+
+  // “你现在”的记忆强度点——蓝色
+  if(st.retain!=null){
+    const px=X(Math.min(st.avgGap,DAYS)), py=Y(st.retain);
+    ctx.fillStyle="rgba(59,130,246,.22)"; ctx.beginPath(); ctx.arc(px,py,9,0,7); ctx.fill();
+    ctx.fillStyle="#3b82f6"; ctx.beginPath(); ctx.arc(px,py,5,0,7); ctx.fill();
+    ctx.strokeStyle="#fff"; ctx.lineWidth=2; ctx.stroke();
+  }
+}
+window.addEventListener("resize", ()=>{ drawMemory(); });
+
 render();
+drawMemory();
 </script>
 </body>
 </html>

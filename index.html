@@ -102,7 +102,7 @@
   </div>
 
   <div class="bar"><i id="barfill"></i></div>
-  <div class="meta"><span id="pos">1 / 8</span><span>已掌握 <b id="known">0</b></span></div>
+  <div class="meta"><span id="pos">1 / 10</span><span>已掌握 <b id="known">0</b></span></div>
 
   <div id="stage"></div>
 
@@ -133,7 +133,7 @@
    每天 8 个词 + 5 个句型，循环覆盖全部内容。同一天所有人看到的一样，
    第二天自动换新。纯前端、无需后端、不花钱。
    ===================================================================== */
-const WORDS_PER_DAY = 8;
+const WORDS_PER_DAY = 10;
 const PATTERNS_PER_DAY = 5;
 
 // ===== 完整词库 =====
@@ -202,7 +202,57 @@ const POOL = {
     {en:"on the fly", cn:"临时 / 现场即兴", ex_en:"We had to change the plan on the fly.", ex_cn:"我们不得不临时改计划。", scene:"即时应变"},
     {en:"back to square one", cn:"回到原点 / 从头再来", ex_en:"The deal fell through, so we're back to square one.", ex_cn:"交易黄了，我们又得从头来。", scene:"前功尽弃"},
     {en:"raise the bar", cn:"提高标准", ex_en:"This launch really raised the bar.", ex_cn:"这次发布把标准拉高了。", scene:"设更高要求"},
-    {en:"keep (sb) posted", cn:"随时告知进展", ex_en:"I'll keep you posted on the results.", ex_cn:"结果我会随时告诉你。", scene:"承诺同步进展"}
+    {en:"keep (sb) posted", cn:"随时告知进展", ex_en:"I'll keep you posted on the results.", ex_cn:"结果我会随时告诉你。", scene:"承诺同步进展"},
+    {en:"on the same wavelength", cn:"想法合拍 / 频道一致", ex_en:"We're totally on the same wavelength about this.", ex_cn:"这事我们想法完全合拍。", scene:"强调默契一致"},
+    {en:"get the ball rolling", cn:"让事情动起来 / 开个头", ex_en:"Let's get the ball rolling on the new project.", ex_cn:"我们先把新项目启动起来。", scene:"推动开始"},
+    {en:"touch and go", cn:"悬而未决 / 情况紧张", ex_en:"It was touch and go, but we made the deadline.", ex_cn:"一度很悬，但我们赶上了截止时间。", scene:"形容惊险过关"},
+    {en:"back burner", cn:"次要位置 / 暂缓处理", ex_en:"We put that idea on the back burner for now.", ex_cn:"那个想法我们暂时先放一放。", scene:"降低优先级"},
+    {en:"in the weeds", cn:"陷入琐碎细节 / 忙不过来", ex_en:"I'm too in the weeds to see the big picture.", ex_cn:"我陷在细节里，看不到全局了。", scene:"被细节淹没"},
+    {en:"circle of trust", cn:"核心信任圈", ex_en:"Only a few people are in my circle of trust here.", ex_cn:"这里只有几个人在我的核心信任圈里。", scene:"讲亲信范围"},
+    {en:"quick win", cn:"速见成效的小胜", ex_en:"Let's look for a few quick wins to build momentum.", ex_cn:"我们先找几个能快速见效的点提振士气。", scene:"讲短期成果"},
+    {en:"north star", cn:"核心目标 / 指路明灯", ex_en:"User happiness is our north star.", ex_cn:"用户满意度是我们的核心目标。", scene:"讲终极指标"},
+    {en:"boil down to", cn:"归结为 / 说到底就是", ex_en:"It all boils down to trust.", ex_cn:"说到底，一切都归结于信任。", scene:"提炼本质"},
+    {en:"hit the ground running", cn:"一上手就火力全开", ex_en:"She hit the ground running on day one.", ex_cn:"她第一天就迅速进入状态。", scene:"夸快速上手"},
+    {en:"wear many hats", cn:"身兼多职", ex_en:"In a startup you wear many hats.", ex_cn:"在创业公司你得身兼数职。", scene:"讲一人多岗"},
+    {en:"raincheck", cn:"改约 / 下次再说", ex_en:"Let's take a raincheck on lunch.", ex_cn:"午饭我们改天吧。", scene:"礼貌推迟"},
+    {en:"ping-pong", cn:"来回反复（讨论/邮件）", ex_en:"We ping-ponged emails all afternoon.", ex_cn:"我们一下午邮件来来回回。", scene:"讲反复沟通"},
+    {en:"cut to the chase", cn:"直奔主题 / 说重点", ex_en:"Let me cut to the chase — we need more time.", ex_cn:"我直说重点吧，我们需要更多时间。", scene:"省略铺垫"},
+    {en:"on the back foot", cn:"处于被动 / 措手不及", ex_en:"The delay put us on the back foot.", ex_cn:"这次延误让我们陷入被动。", scene:"讲被动局面"},
+    {en:"level up", cn:"提升水平 / 升级", ex_en:"This course helped me level up my skills.", ex_cn:"这门课帮我提升了技能。", scene:"讲能力进阶"},
+    {en:"food for thought", cn:"值得深思的东西", ex_en:"That's some real food for thought.", ex_cn:"这确实值得好好想想。", scene:"抛出思考点"},
+    {en:"elephant in the room", cn:"大家避而不谈的问题", ex_en:"Let's address the elephant in the room.", ex_cn:"我们直面那个没人愿提的问题吧。", scene:"点破敏感话题"},
+    {en:"win-win", cn:"双赢", ex_en:"This deal is a win-win for both sides.", ex_cn:"这笔交易对双方都是双赢。", scene:"强调互利"},
+    {en:"ownership", cn:"主人翁意识 / 归属", ex_en:"We want engineers to take ownership of their code.", ex_cn:"我们希望工程师对自己的代码有主人翁意识。", scene:"讲担当"},
+    {en:"bandwidth issue", cn:"精力/资源不足的问题", ex_en:"It's a bandwidth issue, not a skill issue.", ex_cn:"这是精力不够的问题，不是能力问题。", scene:"解释忙不过来"},
+    {en:"circle around", cn:"绕回来 / 再联系", ex_en:"I'll circle around once I hear back.", ex_cn:"等我有回音了再来找你。", scene:"承诺后续"},
+    {en:"green light", cn:"批准 / 放行", ex_en:"The board gave us the green light.", ex_cn:"董事会批准我们放行了。", scene:"获得许可"},
+    {en:"red flag", cn:"警示信号 / 危险苗头", ex_en:"His answer raised a red flag for me.", ex_cn:"他的回答让我警觉起来。", scene:"发现风险信号"},
+    {en:"gut feeling", cn:"直觉", ex_en:"My gut feeling says we should wait.", ex_cn:"我的直觉是我们该等等。", scene:"讲凭感觉判断"},
+    {en:"on the fence", cn:"犹豫不决 / 观望", ex_en:"I'm still on the fence about the offer.", ex_cn:"这个 offer 我还在犹豫。", scene:"表达拿不定主意"},
+    {en:"call it a day", cn:"今天到此为止 / 收工", ex_en:"Let's call it a day and continue tomorrow.", ex_cn:"今天就到这儿吧，明天继续。", scene:"宣布结束工作"},
+    {en:"play devil's advocate", cn:"故意唱反调（帮论证）", ex_en:"Let me play devil's advocate for a second.", ex_cn:"我来故意唱个反调。", scene:"提出反面视角"},
+    {en:"ballpark figure", cn:"大概的数字", ex_en:"Just give me a ballpark figure.", ex_cn:"给我个大概数就行。", scene:"要粗略估算"},
+    {en:"low bandwidth", cn:"没什么精力 / 顾不上", ex_en:"I'm low bandwidth this week.", ex_cn:"我这周实在顾不上。", scene:"婉拒/说很忙"},
+    {en:"take it offline", cn:"会后私下再谈", ex_en:"Good point — let's take it offline.", ex_cn:"好观点，我们会后再单独聊。", scene:"移出当前会议"},
+    {en:"circle of influence", cn:"能影响的范围", ex_en:"Focus on your circle of influence.", ex_cn:"把精力放在你能影响的事上。", scene:"讲聚焦可控项"},
+    {en:"blocker", cn:"阻碍 / 卡住进度的问题", ex_en:"What's the biggest blocker right now?", ex_cn:"现在最大的阻碍是什么？", scene:"识别卡点"},
+    {en:"heads down", cn:"埋头专注（做事）", ex_en:"I'll be heads down on this all morning.", ex_cn:"我整个上午都会埋头搞这个。", scene:"表示专注勿扰"},
+    {en:"ramp-up period", cn:"上手期 / 磨合期", ex_en:"New hires get a two-week ramp-up period.", ex_cn:"新员工有两周的上手期。", scene:"讲适应阶段"},
+    {en:"drill down", cn:"深入到细节 / 下钻", ex_en:"Let's drill down into the regional numbers.", ex_cn:"我们深入看看各地区的数据。", scene:"细化分析"},
+    {en:"circle back around", cn:"回头再议", ex_en:"We'll circle back around next sprint.", ex_cn:"下个迭代我们再回来看。", scene:"推迟到之后"},
+    {en:"scrappy", cn:"灵活拼搏 / 因陋就简", ex_en:"We stayed scrappy in the early days.", ex_cn:"早期我们一直是拼劲十足、能省则省。", scene:"夸务实肯拼"},
+    {en:"table stakes", cn:"基本门槛 / 起步标配", ex_en:"Good security is table stakes now.", ex_cn:"良好的安全性如今是基本标配。", scene:"讲最低要求"},
+    {en:"go the extra mile", cn:"多付出一点 / 加倍努力", ex_en:"She always goes the extra mile for clients.", ex_cn:"她总是为客户多做一步。", scene:"夸尽心尽力"},
+    {en:"burnout", cn:"职业倦怠 / 累垮", ex_en:"Watch out for burnout on this team.", ex_cn:"要留意团队的职业倦怠。", scene:"讲过劳"},
+    {en:"low-key", cn:"低调 / 悄悄地", ex_en:"I'm low-key excited about this.", ex_cn:"我其实还挺期待这个的。", scene:"含蓄表达"},
+    {en:"hands-on", cn:"亲力亲为 / 实操的", ex_en:"He's a very hands-on manager.", ex_cn:"他是个亲力亲为的管理者。", scene:"讲实干风格"},
+    {en:"hands-off", cn:"放手 / 不插手的", ex_en:"She takes a hands-off approach with her team.", ex_cn:"她对团队采取放手管理。", scene:"讲授权风格"},
+    {en:"future-proof", cn:"面向未来 / 经得起时间", ex_en:"We designed it to be future-proof.", ex_cn:"我们把它设计得能经得起未来变化。", scene:"讲前瞻设计"},
+    {en:"low-hanging", cn:"最容易摘的（成果）", ex_en:"Grab the low-hanging stuff first.", ex_cn:"先把最容易的搞定。", scene:"优先做简单高回报"},
+    {en:"circle up", cn:"聚一下 / 碰个头", ex_en:"Let's circle up after standup.", ex_cn:"站会后我们碰个头。", scene:"约简短聚谈"},
+    {en:"win back", cn:"赢回 / 挽回（客户）", ex_en:"We ran a campaign to win back old users.", ex_cn:"我们做了活动挽回老用户。", scene:"讲召回流失"},
+    {en:"stretch goal", cn:"有挑战的高目标", ex_en:"Doubling revenue is our stretch goal.", ex_cn:"营收翻倍是我们的挑战目标。", scene:"讲进阶目标"},
+    {en:"buy time", cn:"争取时间 / 拖一拖", ex_en:"We need to buy some time before launch.", ex_cn:"上线前我们得再争取点时间。", scene:"讲拖延缓冲"}
   ],
   patterns: [
     {en:"I'd appreciate it if you could ...", cn:"如果你能……我会很感激（委婉请求）", ex_en:"I'd appreciate it if you could review this by Friday.", ex_cn:"如果你能周五前看一下，我会很感激。", scene:"礼貌地提请求"},

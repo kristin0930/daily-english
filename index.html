@@ -6,42 +6,59 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>陈斌每日英语 · 每天一组实用词汇 & 句型</title>
 <style>
-  :root{--bg:#0d1117;--card:#161b22;--card2:#1c232d;--line:#2a3340;--text:#e6edf3;--muted:#8b98a9;--accent:#6ea8fe;--a:#7ee787;--warn:#ffb454}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:radial-gradient(1000px 500px at 50% -10%,#1b2430,var(--bg) 55%);color:var(--text);min-height:100vh;padding:28px 18px 40px;display:flex;flex-direction:column;align-items:center}
-  .wrap{width:100%;max-width:560px}
-  h1{font-size:24px;font-weight:800;text-align:center}
-  .date{color:var(--a);font-size:14px;text-align:center;font-weight:700;margin-top:6px}
-  .sub{color:var(--muted);font-size:12.5px;text-align:center;margin:3px 0 18px}
-  .tabs{display:flex;gap:8px;justify-content:center;margin-bottom:14px}
-  .tab{padding:8px 20px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--muted);font-size:14px;font-weight:600;cursor:pointer}
-  .tab.on{background:var(--accent);color:#0d1117;border-color:var(--accent)}
-  .bar{height:6px;background:#222c38;border-radius:999px;overflow:hidden;margin-bottom:6px}
-  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--a));transition:.3s}
-  .meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12.5px;margin-bottom:14px}
-  .meta b{color:var(--a)}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px 24px;min-height:300px;display:flex;flex-direction:column;justify-content:center;cursor:pointer;box-shadow:0 10px 34px rgba(0,0,0,.3);transition:.15s}
+  :root{--card:#ffffff;--ink:#0f172a;--muted:#64748b;--faint:#94a3b8;--mint:#10b981;--sky:#3b82f6;--line:#e6edf5;--warn:#f59e0b}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:linear-gradient(160deg,#eaf4ff,#eafaf1 55%,#fef6f0);background-attachment:fixed;color:var(--ink);min-height:100vh;padding:26px 16px 46px;display:flex;flex-direction:column;align-items:center;position:relative;overflow-x:hidden}
+  body::before,body::after{content:"";position:fixed;border-radius:50%;filter:blur(64px);opacity:.55;z-index:0}
+  body::before{width:280px;height:280px;background:#a7f3d0;top:-90px;left:-70px}
+  body::after{width:320px;height:320px;background:#bfdbfe;bottom:-110px;right:-90px}
+  .wrap{width:100%;max-width:560px;position:relative;z-index:1}
+  h1{font-size:32px;font-weight:900;text-align:center;letter-spacing:.5px;background:linear-gradient(90deg,#10b981,#3b82f6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .date{color:var(--mint);font-size:14px;text-align:center;font-weight:800;margin-top:8px}
+  .sub{color:var(--muted);font-size:12.5px;text-align:center;margin:4px 0 20px}
+  .tabs{display:flex;gap:10px;justify-content:center;margin-bottom:16px}
+  .tab{padding:9px 22px;border-radius:999px;border:1.5px solid var(--line);background:#fff;color:var(--muted);font-size:14px;font-weight:700;cursor:pointer;transition:.2s;box-shadow:0 2px 8px rgba(30,41,59,.05)}
+  .tab.on{background:linear-gradient(90deg,#10b981,#3b82f6);color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(16,185,129,.28)}
+  .bar{height:8px;background:#e2ecf5;border-radius:999px;overflow:hidden;margin-bottom:7px}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#10b981,#3b82f6);border-radius:999px;transition:.4s}
+  .meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12.5px;margin-bottom:16px}
+  .meta b{color:var(--mint);font-weight:800}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:32px 26px;min-height:320px;display:flex;flex-direction:column;justify-content:center;cursor:pointer;box-shadow:0 18px 50px rgba(30,64,140,.12);transition:.15s}
   .card:active{transform:scale(.99)}
+  .card.flipping{animation:flipIn .4s cubic-bezier(.2,.7,.3,1)}
+  @keyframes flipIn{0%{transform:perspective(900px) rotateY(-88deg);opacity:.15}100%{transform:perspective(900px) rotateY(0);opacity:1}}
+  .card.enter{animation:fadeUp .32s ease}
+  @keyframes fadeUp{0%{transform:translateY(14px);opacity:0}100%{transform:translateY(0);opacity:1}}
   .front{text-align:center}
-  .front .en{font-size:30px;font-weight:800;letter-spacing:.3px}
-  .front .tip{color:var(--muted);font-size:13px;margin-top:14px}
-  .back .en{font-size:22px;font-weight:800;margin-bottom:4px}
-  .back .cn{color:var(--accent);font-size:16px;font-weight:600;margin-bottom:14px}
-  .row{margin:10px 0}
-  .row .lb{font-size:11.5px;color:var(--muted);font-weight:700;letter-spacing:1px}
-  .row .ex-en{font-size:15px;margin-top:2px}
+  .badge{display:inline-block;font-size:11px;font-weight:800;color:var(--mint);background:#e7fbf2;padding:4px 12px;border-radius:999px;margin-bottom:16px}
+  .front .en{font-size:40px;font-weight:900;letter-spacing:.3px;color:var(--ink);line-height:1.2}
+  .spk{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;border:none;background:linear-gradient(135deg,#10b981,#3b82f6);color:#fff;font-size:22px;cursor:pointer;margin-top:20px;box-shadow:0 8px 22px rgba(16,185,129,.32)}
+  .spk:active{transform:scale(.9)}
+  .spk.playing{animation:pulse 1s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 8px 22px rgba(16,185,129,.32);transform:scale(1)}50%{box-shadow:0 10px 32px rgba(16,185,129,.6);transform:scale(1.06)}}
+  .front .tip{color:var(--faint);font-size:13px;margin-top:18px;line-height:1.7}
+  .back .en-row{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .back .en{font-size:27px;font-weight:900;color:var(--ink)}
+  .spk-sm{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;font-size:16px;border-radius:50%;border:none;background:#e7fbf2;color:var(--mint);cursor:pointer;flex-shrink:0}
+  .spk-sm:active{transform:scale(.9)}
+  .spk-sm.playing{animation:pulse 1s infinite}
+  .back .cn{color:var(--sky);font-size:17px;font-weight:800;margin-bottom:16px}
+  .row{margin:12px 0;padding:13px 15px;background:#f7fafd;border-radius:14px;border:1px solid #eef3f8}
+  .row .lb{font-size:11px;color:var(--faint);font-weight:800;letter-spacing:1px}
+  .row .ex-en{font-size:15px;margin-top:3px;color:var(--ink);font-weight:600}
   .row .ex-cn{font-size:13px;color:var(--muted);margin-top:2px}
-  .row .scene{font-size:13px;color:#cbd5e1;margin-top:2px}
-  .btns{display:flex;gap:10px;margin-top:16px}
-  .btn{flex:1;padding:13px;border-radius:12px;border:1px solid var(--line);background:var(--card2);color:var(--text);font-size:15px;font-weight:700;cursor:pointer}
-  .btn.good{border-color:rgba(126,231,135,.5);color:var(--a)}
-  .btn.again{border-color:rgba(255,180,84,.5);color:var(--warn)}
-  .btn:active{transform:scale(.98)}
-  .foot{display:flex;justify-content:space-between;margin-top:14px}
-  .lnk{color:var(--muted);font-size:13px;background:none;border:none;cursor:pointer;text-decoration:underline}
-  .done{text-align:center;padding:40px 0}
-  .done .big{font-size:40px}
-  .done h2{font-size:20px;margin:10px 0 6px}
+  .row .scene{font-size:13.5px;color:#334155;margin-top:3px}
+  .btns{display:flex;gap:12px;margin-top:18px}
+  .btn{flex:1;padding:14px;border-radius:14px;border:1.5px solid var(--line);background:#fff;color:var(--ink);font-size:15px;font-weight:800;cursor:pointer;transition:.15s}
+  .btn.good{border-color:transparent;background:linear-gradient(135deg,#10b981,#34d399);color:#fff;box-shadow:0 8px 18px rgba(16,185,129,.28)}
+  .btn.again{border-color:#fde3c4;background:#fff7ed;color:var(--warn)}
+  .btn:active{transform:scale(.97)}
+  .foot{display:flex;justify-content:space-between;margin-top:16px}
+  .lnk{color:var(--faint);font-size:13px;background:none;border:none;cursor:pointer;font-weight:600}
+  .lnk:active{color:var(--sky)}
+  .done{text-align:center;padding:44px 0}
+  .done .big{font-size:52px}
+  .done h2{font-size:22px;margin:12px 0 6px;color:var(--ink)}
   .done p{color:var(--muted);font-size:14px}
 </style>
 </head>
@@ -49,7 +66,7 @@
 <div class="wrap">
   <h1>陈斌每日英语</h1>
   <div class="date" id="today">—</div>
-  <div class="sub">每天自动更新一组 · 点卡片翻面看释义 · 进度当天自动保存</div>
+  <div class="sub">每天自动更新一组 · 点卡片翻面看释义 · 🔊 点喇叭听发音 · 进度当天自动保存</div>
 
   <div class="tabs">
     <div class="tab on" data-deck="words">今日词汇</div>
@@ -241,16 +258,21 @@ function render(){
   const item = arr[idx];
   const isKnown = knownSet().includes(item.en);
   if(!flipped){
-    stage.innerHTML = `<div class="card" onclick="flip()">
-      <div class="front"><div class="en">${item.en}</div>
-      <div class="tip">${isKnown?'✓ 已掌握 · ':''}点一下看释义和例句 👆</div></div></div>`;
-  } else {
-    stage.innerHTML = `<div class="card">
-      <div class="back">
+    stage.innerHTML = `<div class="card enter" onclick="flip()">
+      <div class="front">
+        ${isKnown?'<div class="badge">✓ 已掌握</div>':''}
         <div class="en">${item.en}</div>
+        <button class="spk" onclick="event.stopPropagation();speakCurrent(this)" title="听发音">🔊</button>
+        <div class="tip">点卡片看释义和例句 👆<br>点 🔊 听发音</div>
+      </div></div>`;
+  } else {
+    stage.innerHTML = `<div class="card flipping">
+      <div class="back">
+        <div class="en-row"><div class="en">${item.en}</div>
+          <button class="spk-sm" onclick="speakCurrent(this)" title="听发音">🔊</button></div>
         <div class="cn">${item.cn}</div>
-        <div class="row"><div class="lb">例句</div><div class="ex-en">${item.ex_en}</div><div class="ex-cn">${item.ex_cn}</div></div>
-        <div class="row"><div class="lb">场景</div><div class="scene">${item.scene}</div></div>
+        <div class="row"><div class="lb">例句 EXAMPLE</div><div class="ex-en">${item.ex_en}</div><div class="ex-cn">${item.ex_cn}</div></div>
+        <div class="row"><div class="lb">场景 WHEN TO USE</div><div class="scene">${item.scene}</div></div>
       </div>
       <div class="btns">
         <button class="btn again" onclick="mark(false)">✗ 再练</button>
@@ -260,7 +282,26 @@ function render(){
     </div>`;
   }
 }
-function flip(){ flipped = true; render(); }
+/* ===== 发音：浏览器语音合成 ===== */
+function speakCurrent(btn){
+  const item = list()[idx]; if(!item) return;
+  // 去掉括号注释(如 loop (sb) in → loop in)，让发音更自然
+  const text = item.en.replace(/\([^)]*\)/g,' ').replace(/\s+/g,' ').trim();
+  speak(text, btn);
+}
+function speak(text, btn){
+  if(!('speechSynthesis' in window)){ return; }
+  try{
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US'; u.rate = 0.9; u.pitch = 1;
+    if(btn){ btn.classList.add('playing');
+      u.onend = ()=>btn.classList.remove('playing');
+      u.onerror = ()=>btn.classList.remove('playing'); }
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+function flip(){ flipped = true; render(); if(deck==='words'){ setTimeout(()=>speakCurrent(document.querySelector('.spk-sm')),120); } }
 function next(){ idx++; flipped=false; render(); }
 function prev(){ if(idx>0){idx--; flipped=false; render();} }
 function mark(good){

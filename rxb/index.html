@@ -140,185 +140,161 @@ const PATTERNS_PER_DAY = 5;
 // ===== 完整词库：日常高频 + 旅游实用 =====
 const POOL = {
   words: [
-    // —— 打招呼 · 寒暄 ——
-    {en:"How's it going?", cn:"最近怎么样？", ex_en:"Hey! How's it going?", ex_cn:"嘿！最近怎么样？", scene:"打招呼寒暄"},
-    {en:"long time no see", cn:"好久不见", ex_en:"Long time no see! You look great.", ex_cn:"好久不见！你气色真好。", scene:"打招呼寒暄"},
-    {en:"take care", cn:"保重 / 慢走", ex_en:"See you tomorrow, take care!", ex_cn:"明天见，保重！", scene:"打招呼寒暄"},
-    {en:"catch up", cn:"叙叙旧 / 聊聊近况", ex_en:"Let's catch up over coffee.", ex_cn:"我们喝咖啡叙叙旧吧。", scene:"打招呼寒暄"},
-    {en:"appreciate", cn:"感激 / 感谢", ex_en:"I really appreciate your help.", ex_cn:"我真的很感谢你的帮助。", scene:"打招呼寒暄"},
-    {en:"no worries", cn:"没关系 / 别客气", ex_en:"No worries, it happens.", ex_cn:"没事，常有的事。", scene:"打招呼寒暄"},
-    {en:"my pleasure", cn:"不客气 / 乐意效劳", ex_en:"\"Thanks!\" \"My pleasure.\"", ex_cn:"“谢谢！”“乐意效劳。”", scene:"打招呼寒暄"},
-    {en:"by the way", cn:"顺便说一下", ex_en:"By the way, are you free tonight?", ex_cn:"顺便问一下，你今晚有空吗？", scene:"打招呼寒暄"},
+    // —— 机场航班 ——
+    {en:"passport", cn:"护照（名词）", ex_en:"Please show me your passport.", ex_cn:"请出示您的护照。", scene:"机场航班"},
+    {en:"ticket", cn:"票 / 机票（名词）", ex_en:"I lost my train ticket.", ex_cn:"我把火车票弄丢了。", scene:"机场航班"},
+    {en:"flight", cn:"航班（名词）", ex_en:"My flight leaves at nine.", ex_cn:"我的航班九点起飞。", scene:"机场航班"},
+    {en:"gate", cn:"登机口 / 门（名词）", ex_en:"The gate is on your left.", ex_cn:"登机口在你左边。", scene:"机场航班"},
+    {en:"luggage", cn:"行李（名词）", ex_en:"My luggage is really heavy.", ex_cn:"我的行李很重。", scene:"机场航班"},
+    {en:"delay", cn:"延误 / 推迟（动/名）", ex_en:"The rain caused a long delay.", ex_cn:"下雨导致了很长的延误。", scene:"机场航班"},
+    {en:"board", cn:"登机 / 上车（动词）", ex_en:"We board the plane now.", ex_cn:"我们现在登机。", scene:"机场航班"},
+    {en:"customs", cn:"海关（名词）", ex_en:"We waited at customs.", ex_cn:"我们在海关等候。", scene:"机场航班"},
+    {en:"seat", cn:"座位（名词）", ex_en:"Is this seat taken?", ex_cn:"这个座位有人吗？", scene:"机场航班"},
+    {en:"aisle", cn:"过道（名词）", ex_en:"I prefer an aisle seat.", ex_cn:"我喜欢过道座位。", scene:"机场航班"},
 
-    // —— 机场 · 航班 ——
-    {en:"boarding pass", cn:"登机牌", ex_en:"May I see your boarding pass?", ex_cn:"能看一下您的登机牌吗？", scene:"机场航班"},
-    {en:"check in", cn:"办理登机 / 值机", ex_en:"Where do I check in for this flight?", ex_cn:"这趟航班在哪里值机？", scene:"机场航班"},
-    {en:"boarding gate", cn:"登机口", ex_en:"What's the boarding gate number?", ex_cn:"登机口是几号？", scene:"机场航班"},
-    {en:"departure", cn:"出发 / 离港", ex_en:"The departure time is 9:40.", ex_cn:"出发时间是九点四十。", scene:"机场航班"},
-    {en:"arrival", cn:"到达 / 抵港", ex_en:"Check the arrival board over there.", ex_cn:"看那边的到达信息屏。", scene:"机场航班"},
-    {en:"delayed", cn:"延误的", ex_en:"Our flight is delayed by two hours.", ex_cn:"我们的航班延误了两小时。", scene:"机场航班"},
-    {en:"aisle seat", cn:"过道座位", ex_en:"I'd like an aisle seat, please.", ex_cn:"我想要一个过道座位。", scene:"机场航班"},
-    {en:"window seat", cn:"靠窗座位", ex_en:"Can I get a window seat?", ex_cn:"我能选靠窗的座位吗？", scene:"机场航班"},
-    {en:"carry-on", cn:"随身行李", ex_en:"Is this bag okay as a carry-on?", ex_cn:"这个包可以当随身行李吗？", scene:"机场航班"},
-    {en:"baggage claim", cn:"行李提取处", ex_en:"Meet me at baggage claim.", ex_cn:"在行李提取处等我。", scene:"机场航班"},
-    {en:"customs", cn:"海关", ex_en:"Do I have anything to declare at customs?", ex_cn:"我在海关有需要申报的东西吗？", scene:"机场航班"},
-    {en:"layover", cn:"经停 / 中转", ex_en:"I have a two-hour layover in Tokyo.", ex_cn:"我在东京中转两小时。", scene:"机场航班"},
-    {en:"passport", cn:"护照", ex_en:"Please have your passport ready.", ex_cn:"请准备好您的护照。", scene:"机场航班"},
+    // —— 酒店入住 ——
+    {en:"book", cn:"预订（动词）", ex_en:"I want to book a room.", ex_cn:"我想订一个房间。", scene:"酒店入住"},
+    {en:"reserve", cn:"预订 / 保留（动词）", ex_en:"Can I reserve a table?", ex_cn:"我能订个位子吗？", scene:"酒店入住"},
+    {en:"lobby", cn:"大堂（名词）", ex_en:"Let's meet in the lobby.", ex_cn:"我们在大堂见吧。", scene:"酒店入住"},
+    {en:"key", cn:"钥匙 / 房卡（名词）", ex_en:"I forgot my room key.", ex_cn:"我忘带房卡了。", scene:"酒店入住"},
+    {en:"towel", cn:"毛巾（名词）", ex_en:"Can I get another towel?", ex_cn:"能再给我一条毛巾吗？", scene:"酒店入住"},
+    {en:"pillow", cn:"枕头（名词）", ex_en:"This pillow is too soft.", ex_cn:"这个枕头太软了。", scene:"酒店入住"},
+    {en:"deposit", cn:"押金（名词）", ex_en:"Is there a deposit?", ex_cn:"有押金吗？", scene:"酒店入住"},
+    {en:"upgrade", cn:"升级（动/名）", ex_en:"They upgraded my room.", ex_cn:"他们给我升级了房间。", scene:"酒店入住"},
+    {en:"quiet", cn:"安静的（形容词）", ex_en:"I'd like a quiet room.", ex_cn:"我想要一个安静的房间。", scene:"酒店入住"},
+    {en:"floor", cn:"楼层（名词）", ex_en:"My room is on the third floor.", ex_cn:"我的房间在三楼。", scene:"酒店入住"},
 
-    // —— 酒店 · 入住 ——
-    {en:"reservation", cn:"预订", ex_en:"I have a reservation under Ruan.", ex_cn:"我用阮的名字订了房。", scene:"酒店入住"},
-    {en:"vacancy", cn:"空房", ex_en:"Do you have any vacancies tonight?", ex_cn:"今晚还有空房吗？", scene:"酒店入住"},
-    {en:"check-in", cn:"入住登记", ex_en:"What time is check-in?", ex_cn:"几点可以入住？", scene:"酒店入住"},
-    {en:"check-out", cn:"退房", ex_en:"Check-out is at noon.", ex_cn:"退房时间是中午十二点。", scene:"酒店入住"},
-    {en:"front desk", cn:"前台", ex_en:"Call the front desk for towels.", ex_cn:"要毛巾就打电话给前台。", scene:"酒店入住"},
-    {en:"key card", cn:"房卡", ex_en:"My key card isn't working.", ex_cn:"我的房卡刷不开门。", scene:"酒店入住"},
-    {en:"deposit", cn:"押金", ex_en:"Is there a deposit for the room?", ex_cn:"房间需要押金吗？", scene:"酒店入住"},
-    {en:"amenities", cn:"（酒店）设施用品", ex_en:"The room comes with free amenities.", ex_cn:"房间免费提供洗漱用品。", scene:"酒店入住"},
-    {en:"wake-up call", cn:"叫醒服务", ex_en:"Can I get a wake-up call at 7?", ex_cn:"能帮我七点叫醒吗？", scene:"酒店入住"},
-    {en:"extra bed", cn:"加床", ex_en:"Could we have an extra bed?", ex_cn:"我们能加一张床吗？", scene:"酒店入住"},
+    // —— 餐厅点餐 ——
+    {en:"menu", cn:"菜单（名词）", ex_en:"Can I see the menu?", ex_cn:"能给我看看菜单吗？", scene:"餐厅点餐"},
+    {en:"order", cn:"点餐 / 订单（动/名）", ex_en:"Are you ready to order?", ex_cn:"你可以点餐了吗？", scene:"餐厅点餐"},
+    {en:"delicious", cn:"美味的（形容词）", ex_en:"This soup is delicious.", ex_cn:"这汤真好喝。", scene:"餐厅点餐"},
+    {en:"spicy", cn:"辣的（形容词）", ex_en:"Is this dish spicy?", ex_cn:"这道菜辣吗？", scene:"餐厅点餐"},
+    {en:"bill", cn:"账单（名词）", ex_en:"Could I have the bill?", ex_cn:"能给我账单吗？", scene:"餐厅点餐"},
+    {en:"tip", cn:"小费（名词）", ex_en:"We left a small tip.", ex_cn:"我们留了点小费。", scene:"餐厅点餐"},
+    {en:"napkin", cn:"餐巾纸（名词）", ex_en:"Can I have a napkin?", ex_cn:"能给我张餐巾纸吗？", scene:"餐厅点餐"},
+    {en:"vegetarian", cn:"素食的（形容词）", ex_en:"Do you have vegetarian food?", ex_cn:"你们有素食吗？", scene:"餐厅点餐"},
+    {en:"dessert", cn:"甜点（名词）", ex_en:"I'll have dessert later.", ex_cn:"我待会儿吃甜点。", scene:"餐厅点餐"},
+    {en:"thirsty", cn:"口渴的（形容词）", ex_en:"I'm really thirsty.", ex_cn:"我很渴。", scene:"餐厅点餐"},
 
-    // —— 餐厅 · 点餐 ——
-    {en:"menu", cn:"菜单", ex_en:"Could I see the menu, please?", ex_cn:"能给我看下菜单吗？", scene:"餐厅点餐"},
-    {en:"order", cn:"点餐 / 点单", ex_en:"Are you ready to order?", ex_cn:"您可以点餐了吗？", scene:"餐厅点餐"},
-    {en:"recommend", cn:"推荐", ex_en:"What would you recommend?", ex_cn:"你有什么推荐的吗？", scene:"餐厅点餐"},
-    {en:"specialty", cn:"招牌菜 / 特色", ex_en:"What's the house specialty?", ex_cn:"这家的招牌菜是什么？", scene:"餐厅点餐"},
-    {en:"appetizer", cn:"开胃菜 / 前菜", ex_en:"Let's start with an appetizer.", ex_cn:"我们先来个开胃菜吧。", scene:"餐厅点餐"},
-    {en:"main course", cn:"主菜", ex_en:"For the main course, I'll have steak.", ex_cn:"主菜我要牛排。", scene:"餐厅点餐"},
-    {en:"the bill", cn:"账单 / 买单", ex_en:"Could we get the bill, please?", ex_cn:"能结账吗？", scene:"餐厅点餐"},
-    {en:"tip", cn:"小费", ex_en:"Should I leave a tip?", ex_cn:"我需要给小费吗？", scene:"餐厅点餐"},
-    {en:"takeaway", cn:"外带", ex_en:"Can I get this to takeaway?", ex_cn:"这个能打包带走吗？", scene:"餐厅点餐"},
-    {en:"allergic", cn:"过敏的", ex_en:"I'm allergic to peanuts.", ex_cn:"我对花生过敏。", scene:"餐厅点餐"},
-    {en:"refill", cn:"续杯 / 加满", ex_en:"Can I get a refill on my coffee?", ex_cn:"我的咖啡能续杯吗？", scene:"餐厅点餐"},
-    {en:"vegetarian", cn:"素食的", ex_en:"Do you have vegetarian options?", ex_cn:"你们有素食选择吗？", scene:"餐厅点餐"},
-    {en:"spicy", cn:"辣的", ex_en:"Is this dish very spicy?", ex_cn:"这道菜很辣吗？", scene:"餐厅点餐"},
+    // —— 问路交通 ——
+    {en:"map", cn:"地图（名词）", ex_en:"Can you show me on the map?", ex_cn:"你能在地图上指给我看吗？", scene:"问路交通"},
+    {en:"left", cn:"左边（名/副）", ex_en:"Turn left at the corner.", ex_cn:"在拐角处向左转。", scene:"问路交通"},
+    {en:"right", cn:"右边（名/副）", ex_en:"The bank is on the right.", ex_cn:"银行在右边。", scene:"问路交通"},
+    {en:"straight", cn:"直的 / 一直（形/副）", ex_en:"Go straight ahead.", ex_cn:"一直往前走。", scene:"问路交通"},
+    {en:"nearby", cn:"附近的（形容词）", ex_en:"Is there a hotel nearby?", ex_cn:"附近有酒店吗？", scene:"问路交通"},
+    {en:"corner", cn:"拐角（名词）", ex_en:"It's just around the corner.", ex_cn:"就在拐角处。", scene:"问路交通"},
+    {en:"station", cn:"车站（名词）", ex_en:"Where is the subway station?", ex_cn:"地铁站在哪里？", scene:"问路交通"},
+    {en:"taxi", cn:"出租车（名词）", ex_en:"Let's take a taxi.", ex_cn:"我们打车吧。", scene:"问路交通"},
+    {en:"far", cn:"远的（形容词）", ex_en:"Is it far from here?", ex_cn:"离这儿远吗？", scene:"问路交通"},
+    {en:"transfer", cn:"换乘 / 转（动词）", ex_en:"Do I need to transfer?", ex_cn:"我需要换乘吗？", scene:"问路交通"},
 
-    // —— 问路 · 交通 ——
-    {en:"How do I get to ...?", cn:"我怎么去……？", ex_en:"How do I get to the train station?", ex_cn:"我怎么去火车站？", scene:"问路交通"},
-    {en:"go straight", cn:"直走", ex_en:"Go straight for two blocks.", ex_cn:"直走两个路口。", scene:"问路交通"},
-    {en:"turn left", cn:"左转", ex_en:"Turn left at the corner.", ex_cn:"在拐角处左转。", scene:"问路交通"},
-    {en:"turn right", cn:"右转", ex_en:"Turn right after the bank.", ex_cn:"过了银行右转。", scene:"问路交通"},
-    {en:"around the corner", cn:"就在拐角处", ex_en:"The café is just around the corner.", ex_cn:"咖啡馆就在拐角处。", scene:"问路交通"},
-    {en:"nearby", cn:"附近的", ex_en:"Is there a pharmacy nearby?", ex_cn:"附近有药店吗？", scene:"问路交通"},
-    {en:"How far", cn:"多远", ex_en:"How far is it from here?", ex_cn:"离这儿有多远？", scene:"问路交通"},
-    {en:"on foot", cn:"步行", ex_en:"Can I get there on foot?", ex_cn:"我能走着去吗？", scene:"问路交通"},
-    {en:"subway", cn:"地铁", ex_en:"Take the subway to line 2.", ex_cn:"坐地铁换乘2号线。", scene:"问路交通"},
-    {en:"platform", cn:"站台", ex_en:"Which platform for the airport train?", ex_cn:"去机场的车在几号站台？", scene:"问路交通"},
-    {en:"one-way ticket", cn:"单程票", ex_en:"One one-way ticket, please.", ex_cn:"请给我一张单程票。", scene:"问路交通"},
-    {en:"round trip", cn:"往返", ex_en:"I'd like a round-trip ticket.", ex_cn:"我要一张往返票。", scene:"问路交通"},
-    {en:"fare", cn:"车费 / 票价", ex_en:"How much is the taxi fare?", ex_cn:"出租车费多少钱？", scene:"问路交通"},
-    {en:"get off", cn:"下车", ex_en:"Where should I get off?", ex_cn:"我该在哪站下车？", scene:"问路交通"},
-    {en:"transfer", cn:"换乘", ex_en:"Do I need to transfer?", ex_cn:"我需要换乘吗？", scene:"问路交通"},
+    // —— 购物砍价 ——
+    {en:"price", cn:"价格（名词）", ex_en:"What's the price of this?", ex_cn:"这个多少钱？", scene:"购物砍价"},
+    {en:"discount", cn:"折扣（名词）", ex_en:"Can you give me a discount?", ex_cn:"能打个折吗？", scene:"购物砍价"},
+    {en:"cheap", cn:"便宜的（形容词）", ex_en:"This one is cheaper.", ex_cn:"这个更便宜。", scene:"购物砍价"},
+    {en:"expensive", cn:"贵的（形容词）", ex_en:"It's too expensive.", ex_cn:"太贵了。", scene:"购物砍价"},
+    {en:"size", cn:"尺码 / 大小（名词）", ex_en:"Do you have a bigger size?", ex_cn:"有大一号的吗？", scene:"购物砍价"},
+    {en:"color", cn:"颜色（名词）", ex_en:"Any other colors?", ex_cn:"还有别的颜色吗？", scene:"购物砍价"},
+    {en:"receipt", cn:"收据（名词）", ex_en:"Can I have the receipt?", ex_cn:"能给我收据吗？", scene:"购物砍价"},
+    {en:"refund", cn:"退款（名/动）", ex_en:"I'd like a refund.", ex_cn:"我想退款。", scene:"购物砍价"},
+    {en:"fit", cn:"合身（动词）", ex_en:"These shoes fit well.", ex_cn:"这双鞋很合脚。", scene:"购物砍价"},
+    {en:"try", cn:"试 / 尝试（动词）", ex_en:"Can I try it on?", ex_cn:"我能试穿吗？", scene:"购物砍价"},
 
-    // —— 购物 ——
-    {en:"How much", cn:"多少钱", ex_en:"How much is this?", ex_cn:"这个多少钱？", scene:"购物"},
-    {en:"try on", cn:"试穿", ex_en:"Can I try this on?", ex_cn:"我能试穿一下吗？", scene:"购物"},
-    {en:"fitting room", cn:"试衣间", ex_en:"Where's the fitting room?", ex_cn:"试衣间在哪里？", scene:"购物"},
-    {en:"size", cn:"尺码 / 尺寸", ex_en:"Do you have this in a smaller size?", ex_cn:"这个有小一号的吗？", scene:"购物"},
-    {en:"discount", cn:"折扣", ex_en:"Is there any discount?", ex_cn:"有折扣吗？", scene:"购物"},
-    {en:"on sale", cn:"打折 / 促销中", ex_en:"These shoes are on sale.", ex_cn:"这双鞋在打折。", scene:"购物"},
-    {en:"receipt", cn:"收据 / 小票", ex_en:"Can I have a receipt, please?", ex_cn:"能给我张收据吗？", scene:"购物"},
-    {en:"refund", cn:"退款", ex_en:"Can I get a refund for this?", ex_cn:"这个能退款吗？", scene:"购物"},
-    {en:"exchange", cn:"换货", ex_en:"I'd like to exchange this shirt.", ex_cn:"我想换一下这件衬衫。", scene:"购物"},
-    {en:"a bit expensive", cn:"有点贵", ex_en:"It's a bit expensive for me.", ex_cn:"对我来说有点贵。", scene:"购物"},
-    {en:"just looking", cn:"随便看看", ex_en:"Thanks, I'm just looking.", ex_cn:"谢谢，我随便看看。", scene:"购物"},
-    {en:"souvenir", cn:"纪念品", ex_en:"I want to buy some souvenirs.", ex_cn:"我想买些纪念品。", scene:"购物"},
+    // —— 钱与支付 ——
+    {en:"pay", cn:"付款（动词）", ex_en:"Can I pay by card?", ex_cn:"我能刷卡吗？", scene:"钱与支付"},
+    {en:"cash", cn:"现金（名词）", ex_en:"Do you take cash?", ex_cn:"你们收现金吗？", scene:"钱与支付"},
+    {en:"card", cn:"卡（名词）", ex_en:"I'll pay with my card.", ex_cn:"我用卡付。", scene:"钱与支付"},
+    {en:"change", cn:"零钱 / 找零（名词）", ex_en:"Here is your change.", ex_cn:"这是找你的零钱。", scene:"钱与支付"},
+    {en:"coin", cn:"硬币（名词）", ex_en:"I have some coins.", ex_cn:"我有一些硬币。", scene:"钱与支付"},
+    {en:"wallet", cn:"钱包（名词）", ex_en:"I left my wallet at home.", ex_cn:"我把钱包落家里了。", scene:"钱与支付"},
+    {en:"afford", cn:"负担得起（动词）", ex_en:"I can't afford it.", ex_cn:"我买不起。", scene:"钱与支付"},
+    {en:"budget", cn:"预算（名词）", ex_en:"We're on a tight budget.", ex_cn:"我们预算很紧。", scene:"钱与支付"},
 
-    // —— 钱 · 支付 ——
-    {en:"cash", cn:"现金", ex_en:"Do you take cash?", ex_cn:"你们收现金吗？", scene:"钱与支付"},
-    {en:"credit card", cn:"信用卡", ex_en:"Can I pay by credit card?", ex_cn:"我能刷信用卡吗？", scene:"钱与支付"},
-    {en:"exchange rate", cn:"汇率", ex_en:"What's today's exchange rate?", ex_cn:"今天的汇率是多少？", scene:"钱与支付"},
-    {en:"change", cn:"零钱 / 找零", ex_en:"Keep the change.", ex_cn:"不用找了。", scene:"钱与支付"},
-    {en:"ATM", cn:"自动取款机", ex_en:"Is there an ATM around here?", ex_cn:"这附近有取款机吗？", scene:"钱与支付"},
-    {en:"split the bill", cn:"AA / 分开付", ex_en:"Let's split the bill.", ex_cn:"我们AA吧。", scene:"钱与支付"},
-    {en:"currency", cn:"货币", ex_en:"Where can I change currency?", ex_cn:"哪里可以换钱？", scene:"钱与支付"},
+    // —— 应急求助 ——
+    {en:"help", cn:"帮助（动/名）", ex_en:"Can you help me?", ex_cn:"你能帮我吗？", scene:"应急求助"},
+    {en:"lost", cn:"迷路的 / 丢失的（形容词）", ex_en:"I'm lost.", ex_cn:"我迷路了。", scene:"应急求助"},
+    {en:"emergency", cn:"紧急情况（名词）", ex_en:"This is an emergency.", ex_cn:"这是紧急情况。", scene:"应急求助"},
+    {en:"hospital", cn:"医院（名词）", ex_en:"Where's the nearest hospital?", ex_cn:"最近的医院在哪？", scene:"应急求助"},
+    {en:"police", cn:"警察（名词）", ex_en:"Please call the police.", ex_cn:"请报警。", scene:"应急求助"},
+    {en:"pharmacy", cn:"药店（名词）", ex_en:"Is there a pharmacy nearby?", ex_cn:"附近有药店吗？", scene:"应急求助"},
+    {en:"hurt", cn:"受伤 / 疼（动词）", ex_en:"My leg hurts.", ex_cn:"我的腿疼。", scene:"应急求助"},
+    {en:"careful", cn:"小心的（形容词）", ex_en:"Please be careful.", ex_cn:"请小心。", scene:"应急求助"},
 
-    // —— 应急 · 求助 ——
-    {en:"Excuse me", cn:"打扰一下 / 借过", ex_en:"Excuse me, can you help me?", ex_cn:"打扰一下，能帮我个忙吗？", scene:"应急求助"},
-    {en:"lost", cn:"迷路的 / 丢失的", ex_en:"I think I'm lost.", ex_cn:"我好像迷路了。", scene:"应急求助"},
-    {en:"help", cn:"帮助", ex_en:"Could you help me, please?", ex_cn:"你能帮帮我吗？", scene:"应急求助"},
-    {en:"emergency", cn:"紧急情况", ex_en:"This is an emergency!", ex_cn:"这是紧急情况！", scene:"应急求助"},
-    {en:"call the police", cn:"报警", ex_en:"Please call the police.", ex_cn:"请报警。", scene:"应急求助"},
-    {en:"stolen", cn:"被偷了", ex_en:"My wallet was stolen.", ex_cn:"我的钱包被偷了。", scene:"应急求助"},
-    {en:"pharmacy", cn:"药店", ex_en:"Where's the nearest pharmacy?", ex_cn:"最近的药店在哪？", scene:"应急求助"},
-    {en:"embassy", cn:"大使馆", ex_en:"I need to contact my embassy.", ex_cn:"我需要联系我的大使馆。", scene:"应急求助"},
-    {en:"first aid", cn:"急救", ex_en:"Do you have a first-aid kit?", ex_cn:"你们有急救包吗？", scene:"应急求助"},
+    // —— 观光景点 ——
+    {en:"view", cn:"风景 / 景色（名词）", ex_en:"The view is amazing.", ex_cn:"风景真美。", scene:"观光景点"},
+    {en:"photo", cn:"照片（名词）", ex_en:"Can you take a photo?", ex_cn:"你能帮忙拍张照吗？", scene:"观光景点"},
+    {en:"museum", cn:"博物馆（名词）", ex_en:"The museum is free today.", ex_cn:"博物馆今天免费。", scene:"观光景点"},
+    {en:"souvenir", cn:"纪念品（名词）", ex_en:"I bought a souvenir.", ex_cn:"我买了个纪念品。", scene:"观光景点"},
+    {en:"guide", cn:"导游 / 指南（名词）", ex_en:"Our guide is very kind.", ex_cn:"我们的导游很热心。", scene:"观光景点"},
+    {en:"crowded", cn:"拥挤的（形容词）", ex_en:"It's very crowded here.", ex_cn:"这儿很挤。", scene:"观光景点"},
+    {en:"amazing", cn:"惊艳的（形容词）", ex_en:"The show was amazing.", ex_cn:"那场表演太棒了。", scene:"观光景点"},
+    {en:"famous", cn:"著名的（形容词）", ex_en:"This street is famous.", ex_cn:"这条街很有名。", scene:"观光景点"},
+    {en:"beautiful", cn:"美丽的（形容词）", ex_en:"What a beautiful place!", ex_cn:"多美的地方啊！", scene:"观光景点"},
+    {en:"tour", cn:"旅游 / 参观（名/动）", ex_en:"We joined a city tour.", ex_cn:"我们参加了城市观光。", scene:"观光景点"},
 
-    // —— 观光 · 景点 ——
-    {en:"sightseeing", cn:"观光", ex_en:"We're here for sightseeing.", ex_cn:"我们是来观光的。", scene:"观光景点"},
-    {en:"landmark", cn:"地标", ex_en:"This tower is a famous landmark.", ex_cn:"这座塔是著名地标。", scene:"观光景点"},
-    {en:"admission", cn:"门票 / 入场费", ex_en:"How much is admission?", ex_cn:"门票多少钱？", scene:"观光景点"},
-    {en:"open hours", cn:"开放时间", ex_en:"What are the open hours?", ex_cn:"开放时间是几点到几点？", scene:"观光景点"},
-    {en:"guided tour", cn:"导览团", ex_en:"Is there a guided tour in English?", ex_cn:"有英文导览团吗？", scene:"观光景点"},
-    {en:"take a photo", cn:"拍照", ex_en:"Could you take a photo of us?", ex_cn:"能帮我们拍张照吗？", scene:"观光景点"},
-    {en:"view", cn:"景色 / 视野", ex_en:"The view up here is amazing.", ex_cn:"上面这景色太美了。", scene:"观光景点"},
-    {en:"crowded", cn:"拥挤的", ex_en:"It gets crowded on weekends.", ex_cn:"周末这里很挤。", scene:"观光景点"},
-    {en:"worth it", cn:"值得", ex_en:"The trip was totally worth it.", ex_cn:"这趟旅行太值了。", scene:"观光景点"},
+    // —— 社交交友 ——
+    {en:"friendly", cn:"友好的（形容词）", ex_en:"People here are friendly.", ex_cn:"这里的人很友好。", scene:"社交交友"},
+    {en:"polite", cn:"礼貌的（形容词）", ex_en:"He is very polite.", ex_cn:"他很有礼貌。", scene:"社交交友"},
+    {en:"introduce", cn:"介绍（动词）", ex_en:"Let me introduce myself.", ex_cn:"我来自我介绍一下。", scene:"社交交友"},
+    {en:"chat", cn:"聊天（动词）", ex_en:"We chatted for hours.", ex_cn:"我们聊了好几个小时。", scene:"社交交友"},
+    {en:"invite", cn:"邀请（动词）", ex_en:"They invited me to dinner.", ex_cn:"他们请我吃饭。", scene:"社交交友"},
+    {en:"funny", cn:"有趣的 / 好笑的（形容词）", ex_en:"That's so funny!", ex_cn:"太好笑了！", scene:"社交交友"},
+    {en:"kind", cn:"善良的 / 友好的（形容词）", ex_en:"You're very kind.", ex_cn:"你人真好。", scene:"社交交友"},
+    {en:"hobby", cn:"爱好（名词）", ex_en:"What's your hobby?", ex_cn:"你有什么爱好？", scene:"社交交友"},
 
-    // —— 社交 · 交友 ——
-    {en:"nice to meet you", cn:"很高兴认识你", ex_en:"Hi, nice to meet you!", ex_cn:"你好，很高兴认识你！", scene:"社交交友"},
-    {en:"What do you do?", cn:"你是做什么工作的？", ex_en:"So, what do you do?", ex_cn:"那你是做什么工作的？", scene:"社交交友"},
-    {en:"hang out", cn:"一起玩 / 消磨时间", ex_en:"Do you want to hang out later?", ex_cn:"待会儿想一起出去玩吗？", scene:"社交交友"},
-    {en:"keep in touch", cn:"保持联系", ex_en:"Let's keep in touch!", ex_cn:"我们保持联系！", scene:"社交交友"},
-    {en:"grab a drink", cn:"去喝一杯", ex_en:"Want to grab a drink tonight?", ex_cn:"今晚想去喝一杯吗？", scene:"社交交友"},
-    {en:"sounds good", cn:"听起来不错", ex_en:"Dinner at 7? Sounds good!", ex_cn:"七点吃晚饭？听起来不错！", scene:"社交交友"},
-    {en:"I'm in", cn:"算我一个", ex_en:"A weekend trip? I'm in!", ex_cn:"周末出游？算我一个！", scene:"社交交友"},
-    {en:"awesome", cn:"太棒了", ex_en:"That's awesome news!", ex_cn:"这消息太棒了！", scene:"社交交友"},
+    // —— 时间天气 ——
+    {en:"early", cn:"早的（形容词）", ex_en:"I woke up early today.", ex_cn:"我今天起得早。", scene:"时间天气"},
+    {en:"late", cn:"晚的 / 迟的（形容词）", ex_en:"Sorry I'm late.", ex_cn:"抱歉我迟到了。", scene:"时间天气"},
+    {en:"weather", cn:"天气（名词）", ex_en:"How's the weather today?", ex_cn:"今天天气怎么样？", scene:"时间天气"},
+    {en:"sunny", cn:"晴朗的（形容词）", ex_en:"It's sunny today.", ex_cn:"今天是晴天。", scene:"时间天气"},
+    {en:"rainy", cn:"下雨的（形容词）", ex_en:"It's a rainy day.", ex_cn:"今天是雨天。", scene:"时间天气"},
+    {en:"cloudy", cn:"多云的（形容词）", ex_en:"The sky is cloudy.", ex_cn:"天阴阴的。", scene:"时间天气"},
+    {en:"hot", cn:"热的（形容词）", ex_en:"It's really hot outside.", ex_cn:"外面真热。", scene:"时间天气"},
+    {en:"cold", cn:"冷的（形容词）", ex_en:"It's cold at night.", ex_cn:"晚上很冷。", scene:"时间天气"},
+    {en:"windy", cn:"有风的（形容词）", ex_en:"It's windy today.", ex_cn:"今天风很大。", scene:"时间天气"},
+    {en:"weekend", cn:"周末（名词）", ex_en:"See you this weekend.", ex_cn:"这周末见。", scene:"时间天气"},
 
-    // —— 时间 · 天气 ——
-    {en:"What time", cn:"几点", ex_en:"What time is it now?", ex_cn:"现在几点了？", scene:"时间天气"},
-    {en:"on time", cn:"准时", ex_en:"The bus is right on time.", ex_cn:"公交车很准时。", scene:"时间天气"},
-    {en:"in a hurry", cn:"匆忙 / 赶时间", ex_en:"Sorry, I'm in a hurry.", ex_cn:"抱歉，我赶时间。", scene:"时间天气"},
-    {en:"forecast", cn:"天气预报", ex_en:"The forecast says rain tomorrow.", ex_cn:"预报说明天有雨。", scene:"时间天气"},
-    {en:"humid", cn:"潮湿的", ex_en:"It's really humid today.", ex_cn:"今天真潮。", scene:"时间天气"},
-    {en:"chilly", cn:"微冷的", ex_en:"It's a bit chilly tonight.", ex_cn:"今晚有点凉。", scene:"时间天气"},
+    // —— 身体健康 ——
+    {en:"tired", cn:"累的（形容词）", ex_en:"I feel really tired.", ex_cn:"我觉得很累。", scene:"身体健康"},
+    {en:"sick", cn:"生病的（形容词）", ex_en:"I feel a little sick.", ex_cn:"我有点不舒服。", scene:"身体健康"},
+    {en:"fever", cn:"发烧（名词）", ex_en:"I think I have a fever.", ex_cn:"我好像发烧了。", scene:"身体健康"},
+    {en:"medicine", cn:"药（名词）", ex_en:"I need to take medicine.", ex_cn:"我得吃药。", scene:"身体健康"},
+    {en:"rest", cn:"休息（动/名）", ex_en:"You should get some rest.", ex_cn:"你该休息一下。", scene:"身体健康"},
+    {en:"healthy", cn:"健康的（形容词）", ex_en:"She looks very healthy.", ex_cn:"她看起来很健康。", scene:"身体健康"},
+    {en:"hungry", cn:"饿的（形容词）", ex_en:"I'm getting hungry.", ex_cn:"我有点饿了。", scene:"身体健康"},
+    {en:"sleepy", cn:"困的（形容词）", ex_en:"I feel sleepy now.", ex_cn:"我现在很困。", scene:"身体健康"},
 
-    // —— 通讯 · 网络 ——
-    {en:"Wi-Fi", cn:"无线网", ex_en:"What's the Wi-Fi password?", ex_cn:"Wi-Fi 密码是多少？", scene:"通讯网络"},
-    {en:"charger", cn:"充电器", ex_en:"Can I borrow a charger?", ex_cn:"能借个充电器吗？", scene:"通讯网络"},
-    {en:"signal", cn:"信号", ex_en:"There's no signal here.", ex_cn:"这里没信号。", scene:"通讯网络"},
-    {en:"SIM card", cn:"电话卡", ex_en:"Where can I buy a SIM card?", ex_cn:"哪里能买到电话卡？", scene:"通讯网络"},
-    {en:"data", cn:"流量", ex_en:"I'm running out of data.", ex_cn:"我流量快用完了。", scene:"通讯网络"},
+    // —— 日常动词 ——
+    {en:"need", cn:"需要（动词）", ex_en:"I need some help.", ex_cn:"我需要帮助。", scene:"日常动词"},
+    {en:"want", cn:"想要（动词）", ex_en:"I want to go home.", ex_cn:"我想回家。", scene:"日常动词"},
+    {en:"borrow", cn:"借（动词）", ex_en:"Can I borrow your pen?", ex_cn:"我能借你的笔吗？", scene:"日常动词"},
+    {en:"choose", cn:"选择（动词）", ex_en:"It's hard to choose.", ex_cn:"很难选择。", scene:"日常动词"},
+    {en:"decide", cn:"决定（动词）", ex_en:"I can't decide.", ex_cn:"我拿不定主意。", scene:"日常动词"},
+    {en:"forget", cn:"忘记（动词）", ex_en:"Don't forget your bag.", ex_cn:"别忘了你的包。", scene:"日常动词"},
+    {en:"remember", cn:"记得（动词）", ex_en:"I remember you!", ex_cn:"我记得你！", scene:"日常动词"},
+    {en:"explain", cn:"解释（动词）", ex_en:"Can you explain it?", ex_cn:"你能解释一下吗？", scene:"日常动词"},
+    {en:"wait", cn:"等（动词）", ex_en:"Please wait a moment.", ex_cn:"请稍等。", scene:"日常动词"},
+    {en:"hurry", cn:"赶紧 / 快点（动词）", ex_en:"Hurry, we're late!", ex_cn:"快点，我们要迟到了！", scene:"日常动词"},
+    {en:"relax", cn:"放松（动词）", ex_en:"Just relax and enjoy.", ex_cn:"放松点，好好享受。", scene:"日常动词"},
+    {en:"enjoy", cn:"享受（动词）", ex_en:"Enjoy your trip!", ex_cn:"旅途愉快！", scene:"日常动词"},
+    {en:"prepare", cn:"准备（动词）", ex_en:"I need to prepare.", ex_cn:"我需要准备一下。", scene:"日常动词"},
+    {en:"understand", cn:"明白 / 理解（动词）", ex_en:"I don't understand.", ex_cn:"我不明白。", scene:"日常动词"},
 
-    // —— 身体 · 健康 ——
-    {en:"not feeling well", cn:"不舒服", ex_en:"I'm not feeling well today.", ex_cn:"我今天不太舒服。", scene:"身体健康"},
-    {en:"headache", cn:"头痛", ex_en:"I have a bad headache.", ex_cn:"我头很痛。", scene:"身体健康"},
-    {en:"fever", cn:"发烧", ex_en:"I think I have a fever.", ex_cn:"我好像发烧了。", scene:"身体健康"},
-    {en:"medicine", cn:"药", ex_en:"Do you have medicine for a cold?", ex_cn:"你有感冒药吗？", scene:"身体健康"},
-    {en:"see a doctor", cn:"看医生", ex_en:"You should see a doctor.", ex_cn:"你该去看看医生。", scene:"身体健康"},
-
-    // —— 日常高频动词 ——
-    {en:"make it", cn:"赶到 / 成功做到", ex_en:"Sorry, I can't make it tonight.", ex_cn:"抱歉，我今晚去不了。", scene:"日常动词"},
-    {en:"figure out", cn:"弄明白 / 想出", ex_en:"Let me figure out the route.", ex_cn:"我来弄清楚路线。", scene:"日常动词"},
-    {en:"check out", cn:"看看 / 体验", ex_en:"You should check out that market.", ex_cn:"你该去逛逛那个市场。", scene:"日常动词"},
-    {en:"show up", cn:"出现 / 露面", ex_en:"He didn't show up.", ex_cn:"他没来。", scene:"日常动词"},
-    {en:"pick up", cn:"接（人） / 拿取", ex_en:"I'll pick you up at 8.", ex_cn:"我八点来接你。", scene:"日常动词"},
-    {en:"drop off", cn:"送（人 / 东西）", ex_en:"Can you drop me off here?", ex_cn:"你能在这儿放我下车吗？", scene:"日常动词"},
-    {en:"run out of", cn:"用完 / 耗尽", ex_en:"We ran out of water.", ex_cn:"我们水喝完了。", scene:"日常动词"},
-    {en:"look forward to", cn:"期待", ex_en:"I look forward to the trip.", ex_cn:"我很期待这趟旅行。", scene:"日常动词"},
-    {en:"get along", cn:"相处融洽", ex_en:"We get along really well.", ex_cn:"我们相处得很好。", scene:"日常动词"},
-    {en:"work out", cn:"解决 / 健身", ex_en:"Don't worry, it'll work out.", ex_cn:"别担心，会解决的。", scene:"日常动词"},
-    {en:"give it a try", cn:"试一试", ex_en:"Just give it a try!", ex_cn:"试试看嘛！", scene:"日常动词"},
-    {en:"hang on", cn:"稍等 / 坚持", ex_en:"Hang on, I'll be right there.", ex_cn:"稍等，我马上到。", scene:"日常动词"},
-
-    // —— 日常高频形容词 · 感受 ——
-    {en:"exhausted", cn:"筋疲力尽的", ex_en:"I'm exhausted after the flight.", ex_cn:"下飞机后我累坏了。", scene:"感受形容"},
-    {en:"starving", cn:"饿极了", ex_en:"I'm starving, let's eat.", ex_cn:"我饿死了，吃饭吧。", scene:"感受形容"},
-    {en:"amazing", cn:"了不起的", ex_en:"The food here is amazing.", ex_cn:"这里的食物太赞了。", scene:"感受形容"},
-    {en:"gorgeous", cn:"极美的", ex_en:"What a gorgeous sunset!", ex_cn:"多美的日落啊！", scene:"感受形容"},
-    {en:"annoying", cn:"烦人的", ex_en:"The noise is really annoying.", ex_cn:"这噪音真烦人。", scene:"感受形容"},
-    {en:"convenient", cn:"方便的", ex_en:"The hotel is very convenient.", ex_cn:"这家酒店很方便。", scene:"感受形容"},
-    {en:"reasonable", cn:"合理的（价格）", ex_en:"The price is quite reasonable.", ex_cn:"价格挺合理的。", scene:"感受形容"},
-    {en:"unforgettable", cn:"难忘的", ex_en:"It was an unforgettable trip.", ex_cn:"这是一趟难忘的旅行。", scene:"感受形容"},
-
-    // —— 更多日常口语零件 ——
-    {en:"kind of", cn:"有点儿 / 算是", ex_en:"I'm kind of tired.", ex_cn:"我有点累。", scene:"口语零件"},
-    {en:"a bunch of", cn:"一堆 / 许多", ex_en:"We took a bunch of photos.", ex_cn:"我们拍了一堆照片。", scene:"口语零件"},
-    {en:"pretty much", cn:"差不多 / 基本上", ex_en:"We're pretty much ready.", ex_cn:"我们基本上准备好了。", scene:"口语零件"},
-    {en:"for sure", cn:"当然 / 肯定", ex_en:"\"Coming?\" \"For sure!\"", ex_cn:"“来吗？”“当然！”", scene:"口语零件"},
-    {en:"no big deal", cn:"没什么大不了", ex_en:"Relax, it's no big deal.", ex_cn:"放松，没什么大不了的。", scene:"口语零件"},
-    {en:"make sense", cn:"讲得通 / 有道理", ex_en:"That makes sense.", ex_cn:"这说得通。", scene:"口语零件"},
-    {en:"as soon as possible", cn:"尽快", ex_en:"Please reply as soon as possible.", ex_cn:"请尽快回复。", scene:"口语零件"},
-    {en:"up to you", cn:"你决定", ex_en:"Where to eat? It's up to you.", ex_cn:"去哪吃？你决定。", scene:"口语零件"}
+    // —— 日常形容词 ——
+    {en:"easy", cn:"容易的（形容词）", ex_en:"That's an easy question.", ex_cn:"那是个简单的问题。", scene:"日常形容词"},
+    {en:"difficult", cn:"困难的（形容词）", ex_en:"This is a bit difficult.", ex_cn:"这有点难。", scene:"日常形容词"},
+    {en:"busy", cn:"忙的（形容词）", ex_en:"I'm busy right now.", ex_cn:"我现在很忙。", scene:"日常形容词"},
+    {en:"free", cn:"有空的 / 免费的（形容词）", ex_en:"Are you free tonight?", ex_cn:"你今晚有空吗？", scene:"日常形容词"},
+    {en:"ready", cn:"准备好的（形容词）", ex_en:"I'm ready to go.", ex_cn:"我准备好出发了。", scene:"日常形容词"},
+    {en:"perfect", cn:"完美的（形容词）", ex_en:"That sounds perfect.", ex_cn:"那太好了。", scene:"日常形容词"},
+    {en:"great", cn:"很棒的（形容词）", ex_en:"You did a great job.", ex_cn:"你做得很好。", scene:"日常形容词"},
+    {en:"boring", cn:"无聊的（形容词）", ex_en:"The movie was boring.", ex_cn:"那部电影很无聊。", scene:"日常形容词"},
+    {en:"interesting", cn:"有趣的（形容词）", ex_en:"It's an interesting idea.", ex_cn:"这想法挺有意思。", scene:"日常形容词"},
+    {en:"comfortable", cn:"舒服的（形容词）", ex_en:"This bed is comfortable.", ex_cn:"这张床很舒服。", scene:"日常形容词"},
+    {en:"convenient", cn:"方便的（形容词）", ex_en:"The location is convenient.", ex_cn:"这个位置很方便。", scene:"日常形容词"},
+    {en:"possible", cn:"可能的（形容词）", ex_en:"Is that possible?", ex_cn:"那可能吗？", scene:"日常形容词"},
+    {en:"available", cn:"可用的 / 有空的（形容词）", ex_en:"Is the room available?", ex_cn:"这个房间有空吗？", scene:"日常形容词"},
+    {en:"sure", cn:"确定的 / 当然（形容词）", ex_en:"Are you sure?", ex_cn:"你确定吗？", scene:"日常形容词"}
   ],
   patterns: [
     // —— 礼貌请求 · 问询 ——
@@ -470,16 +446,27 @@ function speakCurrent(btn){
   speak(text, btn);
 }
 function speak(text, btn){
-  if(!('speechSynthesis' in window)){ return; }
+  if(btn){ btn.classList.add('playing'); }
+  const done = ()=>{ if(btn) btn.classList.remove('playing'); };
+  // 优先用有道真人发音音频（手机/鸿蒙浏览器通用）；失败再退回浏览器语音合成
+  try{
+    const url = 'https://dict.youdao.com/dictvoice?type=2&audio=' + encodeURIComponent(text);
+    const audio = new Audio(url);
+    audio.onended = done;
+    audio.onerror = ()=>{ ttsFallback(text, done); };
+    const p = audio.play();
+    if(p && p.catch){ p.catch(()=>{ ttsFallback(text, done); }); }
+  }catch(e){ ttsFallback(text, done); }
+}
+function ttsFallback(text, done){
+  if(!('speechSynthesis' in window)){ done(); return; }
   try{
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.lang = 'en-US'; u.rate = 0.9; u.pitch = 1;
-    if(btn){ btn.classList.add('playing');
-      u.onend = ()=>btn.classList.remove('playing');
-      u.onerror = ()=>btn.classList.remove('playing'); }
+    u.onend = done; u.onerror = done;
     window.speechSynthesis.speak(u);
-  }catch(e){}
+  }catch(e){ done(); }
 }
 function flip(){ flipped = true; render(); if(deck==='words'){ setTimeout(()=>speakCurrent(document.querySelector('.spk-sm')),120); } }
 function next(){ idx++; flipped=false; render(); }

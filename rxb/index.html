@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>阮祥宝每日英语 · 每天一组日常 & 旅游口语</title>
+<style>
+  :root{--card:#ffffff;--ink:#0f172a;--muted:#64748b;--faint:#94a3b8;--mint:#10b981;--sky:#3b82f6;--line:#e6edf5;--warn:#f59e0b}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#eaf4ff;color:var(--ink);min-height:100vh;padding:26px 16px 46px;display:flex;flex-direction:column;align-items:center;position:relative;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;background:url("bg.jpg") center top/cover no-repeat;z-index:0}
+  body::after{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,.06) 38%,rgba(255,255,255,.5) 60%,rgba(255,255,255,.84) 82%);z-index:0}
+  /* ===== 星光闪烁 + 流星 动效层 ===== */
+  #sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  #sky .star{position:absolute;background:#fff;border-radius:50%;opacity:.85;animation:twinkle var(--tw,3s) ease-in-out infinite;box-shadow:0 0 6px rgba(255,255,255,.9)}
+  @keyframes twinkle{0%,100%{opacity:.15;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}}
+  #sky .meteor{position:absolute;width:2px;height:2px;background:linear-gradient(#fff,rgba(255,255,255,0));border-radius:50%;filter:drop-shadow(0 0 6px #fff);opacity:0}
+  #sky .meteor::after{content:"";position:absolute;top:0;left:0;width:120px;height:1.5px;background:linear-gradient(90deg,rgba(255,255,255,.9),rgba(255,255,255,0));transform:rotate(35deg);transform-origin:left center}
+  @keyframes shoot{0%{transform:translate(0,0);opacity:0}8%{opacity:1}55%{opacity:1}100%{transform:translate(-320px,230px);opacity:0}}
+  .wrap{width:100%;max-width:560px;position:relative;z-index:1}
+  .head-band{background:rgba(255,255,255,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.9);border-radius:22px;padding:16px 18px 14px;margin-bottom:18px;box-shadow:0 10px 30px rgba(20,30,70,.18)}
+  h1{font-size:32px;font-weight:900;text-align:center;letter-spacing:.5px;background:linear-gradient(90deg,#10b981,#3b82f6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .date{color:var(--mint);font-size:14px;text-align:center;font-weight:800;margin-top:6px}
+  .sub{color:#64748b;font-size:12.5px;text-align:center;margin:5px 0 0;line-height:1.5}
+  .tabs{display:flex;gap:10px;justify-content:center;margin-bottom:16px}
+  .tab{padding:9px 22px;border-radius:999px;border:1.5px solid var(--line);background:#fff;color:var(--muted);font-size:14px;font-weight:700;cursor:pointer;transition:.2s;box-shadow:0 2px 8px rgba(30,41,59,.05)}
+  .tab.on{background:linear-gradient(90deg,#10b981,#3b82f6);color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(16,185,129,.28)}
+  .bar{height:8px;background:#e2ecf5;border-radius:999px;overflow:hidden;margin-bottom:7px}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#10b981,#3b82f6);border-radius:999px;transition:.4s}
+  .meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12.5px;margin-bottom:16px}
+  .meta b{color:var(--mint);font-weight:800}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:32px 26px;min-height:320px;display:flex;flex-direction:column;justify-content:center;cursor:pointer;box-shadow:0 18px 50px rgba(30,64,140,.12);transition:.15s}
+  .card:active{transform:scale(.99)}
+  .card.flipping{animation:flipIn .4s cubic-bezier(.2,.7,.3,1)}
+  @keyframes flipIn{0%{transform:perspective(900px) rotateY(-88deg);opacity:.15}100%{transform:perspective(900px) rotateY(0);opacity:1}}
+  .card.enter{animation:fadeUp .32s ease}
+  @keyframes fadeUp{0%{transform:translateY(14px);opacity:0}100%{transform:translateY(0);opacity:1}}
+  .front{text-align:center}
+  .badge{display:inline-block;font-size:11px;font-weight:800;color:var(--mint);background:#e7fbf2;padding:4px 12px;border-radius:999px;margin-bottom:16px}
+  .front .en{font-size:40px;font-weight:900;letter-spacing:.3px;color:var(--ink);line-height:1.2}
+  .spk{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;border:none;background:linear-gradient(135deg,#10b981,#3b82f6);color:#fff;font-size:22px;cursor:pointer;margin-top:20px;box-shadow:0 8px 22px rgba(16,185,129,.32)}
+  .spk:active{transform:scale(.9)}
+  .spk.playing{animation:pulse 1s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 8px 22px rgba(16,185,129,.32);transform:scale(1)}50%{box-shadow:0 10px 32px rgba(16,185,129,.6);transform:scale(1.06)}}
+  .front .tip{color:var(--faint);font-size:13px;margin-top:18px;line-height:1.7}
+  .back .en-row{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .back .en{font-size:27px;font-weight:900;color:var(--ink)}
+  .spk-sm{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;font-size:16px;border-radius:50%;border:none;background:#e7fbf2;color:var(--mint);cursor:pointer;flex-shrink:0}
+  .spk-sm:active{transform:scale(.9)}
+  .spk-sm.playing{animation:pulse 1s infinite}
+  .back .cn{color:var(--sky);font-size:17px;font-weight:800;margin-bottom:16px}
+  .row{margin:12px 0;padding:13px 15px;background:#f7fafd;border-radius:14px;border:1px solid #eef3f8}
+  .row .lb{font-size:11px;color:var(--faint);font-weight:800;letter-spacing:1px}
+  .row .ex-en{font-size:15px;margin-top:3px;color:var(--ink);font-weight:600}
+  .row .ex-cn{font-size:13px;color:var(--muted);margin-top:2px}
+  .row .scene{font-size:13.5px;color:#334155;margin-top:3px}
+  .btns{display:flex;gap:12px;margin-top:18px}
+  .btn{flex:1;padding:14px;border-radius:14px;border:1.5px solid var(--line);background:#fff;color:var(--ink);font-size:15px;font-weight:800;cursor:pointer;transition:.15s}
+  .btn.good{border-color:transparent;background:linear-gradient(135deg,#10b981,#34d399);color:#fff;box-shadow:0 8px 18px rgba(16,185,129,.28)}
+  .btn.again{border-color:#fde3c4;background:#fff7ed;color:var(--warn)}
+  .btn:active{transform:scale(.97)}
+  .foot{display:flex;justify-content:space-between;margin-top:16px}
+  .lnk{color:var(--faint);font-size:13px;background:none;border:none;cursor:pointer;font-weight:600}
+  .lnk:active{color:var(--sky)}
+  .done{text-align:center;padding:44px 0}
+  .done .big{font-size:52px}
+  .done h2{font-size:22px;margin:12px 0 6px;color:var(--ink)}
+  .done p{color:var(--muted);font-size:14px}
+  /* ===== 记忆曲线模块 ===== */
+  .mem-card{background:rgba(255,255,255,.9);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:22px;padding:20px 18px 18px;margin-top:20px;box-shadow:0 14px 40px rgba(30,64,140,.12)}
+  .mem-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:4px;margin-bottom:6px}
+  .mem-title{font-size:17px;font-weight:900;color:var(--ink)}
+  .mem-sub{font-size:11.5px;color:var(--faint);font-weight:600}
+  .mem-chart-box{position:relative;width:100%;margin:10px 0 6px}
+  #memChart{width:100%;height:180px;display:block}
+  .mem-legend{display:flex;gap:16px;justify-content:center;font-size:11.5px;color:var(--muted);margin:2px 0 14px;flex-wrap:wrap}
+  .mem-legend i{display:inline-block;width:14px;height:0;border-top-width:3px;border-top-style:solid;vertical-align:middle;margin-right:5px;border-radius:2px}
+  .mem-legend .l-rev i{border-top-color:#10b981}
+  .mem-legend .l-forget i{border-top-color:#f59e0b;border-top-style:dashed}
+  .mem-legend .l-you i{border-top:none;width:9px;height:9px;border-radius:50%;background:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.25)}
+  .mem-stats{display:flex;gap:10px}
+  .mem-stats .ms{flex:1;background:#f7fafd;border:1px solid #eef3f8;border-radius:14px;padding:12px 8px;text-align:center}
+  .mem-stats .ms b{display:block;font-size:22px;font-weight:900;background:linear-gradient(90deg,#10b981,#3b82f6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1}
+  .mem-stats .ms span{display:block;font-size:11px;color:var(--muted);margin-top:4px;font-weight:600}
+  .mem-tip{font-size:12px;color:#334155;text-align:center;margin-top:12px;line-height:1.6;background:#eef7ff;border-radius:12px;padding:10px 12px}
+  .mem-tip b{color:var(--sky)}
+</style>
+</head>
+<body>
+<div id="sky"></div>
+<div class="wrap">
+  <div class="head-band">
+    <h1>阮祥宝每日英语</h1>
+    <div class="date" id="today">—</div>
+    <div class="sub">每天自动更新一组 · 日常口语 & 旅游实用 · 点卡片翻面看释义 · 🔊 点喇叭听发音 · 进度当天自动保存</div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab on" data-deck="words">今日词汇</div>
+    <div class="tab" data-deck="patterns">今日口语句型</div>
+  </div>
+
+  <div class="bar"><i id="barfill"></i></div>
+  <div class="meta"><span id="pos">1 / 10</span><span>已掌握 <b id="known">0</b></span></div>
+
+  <div id="stage"></div>
+
+  <div class="mem-card" id="memCard">
+    <div class="mem-head">
+      <div class="mem-title">🧠 记忆曲线</div>
+      <div class="mem-sub">艾宾浩斯遗忘规律 · 按时复习记得更牢</div>
+    </div>
+    <div class="mem-chart-box"><canvas id="memChart"></canvas></div>
+    <div class="mem-legend">
+      <span class="l-rev"><i></i>按时复习</span>
+      <span class="l-forget"><i></i>不复习</span>
+      <span class="l-you"><i></i>你现在</span>
+    </div>
+    <div class="mem-stats">
+      <div class="ms"><b id="msLearned">0</b><span>累计学过</span></div>
+      <div class="ms"><b id="msRetain">—</b><span>当前记忆强度</span></div>
+      <div class="ms"><b id="msDue">0</b><span>今日待巩固</span></div>
+    </div>
+    <div class="mem-tip" id="memTip">开始学习后，这里会显示你的记忆强度变化 👆</div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   阮祥宝每日英语 · 按日期自动轮换（日常对话 + 旅游场景）
+   原理：下面是完整词库(POOL)。网页根据"当天是第几天"自动切出今日一组，
+   每天 10 个词 + 5 个句型，循环覆盖全部内容。同一天所有人看到的一样，
+   第二天自动换新。纯前端、无需后端、不花钱。
+   ★ 本页存储键使用 rxb- 独立前缀，与其它每日英语站的学习进度完全隔离。
+   ===================================================================== */
+const WORDS_PER_DAY = 10;
+const PATTERNS_PER_DAY = 5;
+
+// ===== 完整词库：日常高频 + 旅游实用 =====
+const POOL = {
+  words: [
+    // —— 打招呼 · 寒暄 ——
+    {en:"How's it going?", cn:"最近怎么样？", ex_en:"Hey! How's it going?", ex_cn:"嘿！最近怎么样？", scene:"打招呼寒暄"},
+    {en:"long time no see", cn:"好久不见", ex_en:"Long time no see! You look great.", ex_cn:"好久不见！你气色真好。", scene:"打招呼寒暄"},
+    {en:"take care", cn:"保重 / 慢走", ex_en:"See you tomorrow, take care!", ex_cn:"明天见，保重！", scene:"打招呼寒暄"},
+    {en:"catch up", cn:"叙叙旧 / 聊聊近况", ex_en:"Let's catch up over coffee.", ex_cn:"我们喝咖啡叙叙旧吧。", scene:"打招呼寒暄"},
+    {en:"appreciate", cn:"感激 / 感谢", ex_en:"I really appreciate your help.", ex_cn:"我真的很感谢你的帮助。", scene:"打招呼寒暄"},
+    {en:"no worries", cn:"没关系 / 别客气", ex_en:"No worries, it happens.", ex_cn:"没事，常有的事。", scene:"打招呼寒暄"},
+    {en:"my pleasure", cn:"不客气 / 乐意效劳", ex_en:"\"Thanks!\" \"My pleasure.\"", ex_cn:"“谢谢！”“乐意效劳。”", scene:"打招呼寒暄"},
+    {en:"by the way", cn:"顺便说一下", ex_en:"By the way, are you free tonight?", ex_cn:"顺便问一下，你今晚有空吗？", scene:"打招呼寒暄"},
+
+    // —— 机场 · 航班 ——
+    {en:"boarding pass", cn:"登机牌", ex_en:"May I see your boarding pass?", ex_cn:"能看一下您的登机牌吗？", scene:"机场航班"},
+    {en:"check in", cn:"办理登机 / 值机", ex_en:"Where do I check in for this flight?", ex_cn:"这趟航班在哪里值机？", scene:"机场航班"},
+    {en:"boarding gate", cn:"登机口", ex_en:"What's the boarding gate number?", ex_cn:"登机口是几号？", scene:"机场航班"},
+    {en:"departure", cn:"出发 / 离港", ex_en:"The departure time is 9:40.", ex_cn:"出发时间是九点四十。", scene:"机场航班"},
+    {en:"arrival", cn:"到达 / 抵港", ex_en:"Check the arrival board over there.", ex_cn:"看那边的到达信息屏。", scene:"机场航班"},
+    {en:"delayed", cn:"延误的", ex_en:"Our flight is delayed by two hours.", ex_cn:"我们的航班延误了两小时。", scene:"机场航班"},
+    {en:"aisle seat", cn:"过道座位", ex_en:"I'd like an aisle seat, please.", ex_cn:"我想要一个过道座位。", scene:"机场航班"},
+    {en:"window seat", cn:"靠窗座位", ex_en:"Can I get a window seat?", ex_cn:"我能选靠窗的座位吗？", scene:"机场航班"},
+    {en:"carry-on", cn:"随身行李", ex_en:"Is this bag okay as a carry-on?", ex_cn:"这个包可以当随身行李吗？", scene:"机场航班"},
+    {en:"baggage claim", cn:"行李提取处", ex_en:"Meet me at baggage claim.", ex_cn:"在行李提取处等我。", scene:"机场航班"},
+    {en:"customs", cn:"海关", ex_en:"Do I have anything to declare at customs?", ex_cn:"我在海关有需要申报的东西吗？", scene:"机场航班"},
+    {en:"layover", cn:"经停 / 中转", ex_en:"I have a two-hour layover in Tokyo.", ex_cn:"我在东京中转两小时。", scene:"机场航班"},
+    {en:"passport", cn:"护照", ex_en:"Please have your passport ready.", ex_cn:"请准备好您的护照。", scene:"机场航班"},
+
+    // —— 酒店 · 入住 ——
+    {en:"reservation", cn:"预订", ex_en:"I have a reservation under Ruan.", ex_cn:"我用阮的名字订了房。", scene:"酒店入住"},
+    {en:"vacancy", cn:"空房", ex_en:"Do you have any vacancies tonight?", ex_cn:"今晚还有空房吗？", scene:"酒店入住"},
+    {en:"check-in", cn:"入住登记", ex_en:"What time is check-in?", ex_cn:"几点可以入住？", scene:"酒店入住"},
+    {en:"check-out", cn:"退房", ex_en:"Check-out is at noon.", ex_cn:"退房时间是中午十二点。", scene:"酒店入住"},
+    {en:"front desk", cn:"前台", ex_en:"Call the front desk for towels.", ex_cn:"要毛巾就打电话给前台。", scene:"酒店入住"},
+    {en:"key card", cn:"房卡", ex_en:"My key card isn't working.", ex_cn:"我的房卡刷不开门。", scene:"酒店入住"},
+    {en:"deposit", cn:"押金", ex_en:"Is there a deposit for the room?", ex_cn:"房间需要押金吗？", scene:"酒店入住"},
+    {en:"amenities", cn:"（酒店）设施用品", ex_en:"The room comes with free amenities.", ex_cn:"房间免费提供洗漱用品。", scene:"酒店入住"},
+    {en:"wake-up call", cn:"叫醒服务", ex_en:"Can I get a wake-up call at 7?", ex_cn:"能帮我七点叫醒吗？", scene:"酒店入住"},
+    {en:"extra bed", cn:"加床", ex_en:"Could we have an extra bed?", ex_cn:"我们能加一张床吗？", scene:"酒店入住"},
+
+    // —— 餐厅 · 点餐 ——
+    {en:"menu", cn:"菜单", ex_en:"Could I see the menu, please?", ex_cn:"能给我看下菜单吗？", scene:"餐厅点餐"},
+    {en:"order", cn:"点餐 / 点单", ex_en:"Are you ready to order?", ex_cn:"您可以点餐了吗？", scene:"餐厅点餐"},
+    {en:"recommend", cn:"推荐", ex_en:"What would you recommend?", ex_cn:"你有什么推荐的吗？", scene:"餐厅点餐"},
+    {en:"specialty", cn:"招牌菜 / 特色", ex_en:"What's the house specialty?", ex_cn:"这家的招牌菜是什么？", scene:"餐厅点餐"},
+    {en:"appetizer", cn:"开胃菜 / 前菜", ex_en:"Let's start with an appetizer.", ex_cn:"我们先来个开胃菜吧。", scene:"餐厅点餐"},
+    {en:"main course", cn:"主菜", ex_en:"For the main course, I'll have steak.", ex_cn:"主菜我要牛排。", scene:"餐厅点餐"},
+    {en:"the bill", cn:"账单 / 买单", ex_en:"Could we get the bill, please?", ex_cn:"能结账吗？", scene:"餐厅点餐"},
+    {en:"tip", cn:"小费", ex_en:"Should I leave a tip?", ex_cn:"我需要给小费吗？", scene:"餐厅点餐"},
+    {en:"takeaway", cn:"外带", ex_en:"Can I get this to takeaway?", ex_cn:"这个能打包带走吗？", scene:"餐厅点餐"},
+    {en:"allergic", cn:"过敏的", ex_en:"I'm allergic to peanuts.", ex_cn:"我对花生过敏。", scene:"餐厅点餐"},
+    {en:"refill", cn:"续杯 / 加满", ex_en:"Can I get a refill on my coffee?", ex_cn:"我的咖啡能续杯吗？", scene:"餐厅点餐"},
+    {en:"vegetarian", cn:"素食的", ex_en:"Do you have vegetarian options?", ex_cn:"你们有素食选择吗？", scene:"餐厅点餐"},
+    {en:"spicy", cn:"辣的", ex_en:"Is this dish very spicy?", ex_cn:"这道菜很辣吗？", scene:"餐厅点餐"},
+
+    // —— 问路 · 交通 ——
+    {en:"How do I get to ...?", cn:"我怎么去……？", ex_en:"How do I get to the train station?", ex_cn:"我怎么去火车站？", scene:"问路交通"},
+    {en:"go straight", cn:"直走", ex_en:"Go straight for two blocks.", ex_cn:"直走两个路口。", scene:"问路交通"},
+    {en:"turn left", cn:"左转", ex_en:"Turn left at the corner.", ex_cn:"在拐角处左转。", scene:"问路交通"},
+    {en:"turn right", cn:"右转", ex_en:"Turn right after the bank.", ex_cn:"过了银行右转。", scene:"问路交通"},
+    {en:"around the corner", cn:"就在拐角处", ex_en:"The café is just around the corner.", ex_cn:"咖啡馆就在拐角处。", scene:"问路交通"},
+    {en:"nearby", cn:"附近的", ex_en:"Is there a pharmacy nearby?", ex_cn:"附近有药店吗？", scene:"问路交通"},
+    {en:"How far", cn:"多远", ex_en:"How far is it from here?", ex_cn:"离这儿有多远？", scene:"问路交通"},
+    {en:"on foot", cn:"步行", ex_en:"Can I get there on foot?", ex_cn:"我能走着去吗？", scene:"问路交通"},
+    {en:"subway", cn:"地铁", ex_en:"Take the subway to line 2.", ex_cn:"坐地铁换乘2号线。", scene:"问路交通"},
+    {en:"platform", cn:"站台", ex_en:"Which platform for the airport train?", ex_cn:"去机场的车在几号站台？", scene:"问路交通"},
+    {en:"one-way ticket", cn:"单程票", ex_en:"One one-way ticket, please.", ex_cn:"请给我一张单程票。", scene:"问路交通"},
+    {en:"round trip", cn:"往返", ex_en:"I'd like a round-trip ticket.", ex_cn:"我要一张往返票。", scene:"问路交通"},
+    {en:"fare", cn:"车费 / 票价", ex_en:"How much is the taxi fare?", ex_cn:"出租车费多少钱？", scene:"问路交通"},
+    {en:"get off", cn:"下车", ex_en:"Where should I get off?", ex_cn:"我该在哪站下车？", scene:"问路交通"},
+    {en:"transfer", cn:"换乘", ex_en:"Do I need to transfer?", ex_cn:"我需要换乘吗？", scene:"问路交通"},
+
+    // —— 购物 ——
+    {en:"How much", cn:"多少钱", ex_en:"How much is this?", ex_cn:"这个多少钱？", scene:"购物"},
+    {en:"try on", cn:"试穿", ex_en:"Can I try this on?", ex_cn:"我能试穿一下吗？", scene:"购物"},
+    {en:"fitting room", cn:"试衣间", ex_en:"Where's the fitting room?", ex_cn:"试衣间在哪里？", scene:"购物"},
+    {en:"size", cn:"尺码 / 尺寸", ex_en:"Do you have this in a smaller size?", ex_cn:"这个有小一号的吗？", scene:"购物"},
+    {en:"discount", cn:"折扣", ex_en:"Is there any discount?", ex_cn:"有折扣吗？", scene:"购物"},
+    {en:"on sale", cn:"打折 / 促销中", ex_en:"These shoes are on sale.", ex_cn:"这双鞋在打折。", scene:"购物"},
+    {en:"receipt", cn:"收据 / 小票", ex_en:"Can I have a receipt, please?", ex_cn:"能给我张收据吗？", scene:"购物"},
+    {en:"refund", cn:"退款", ex_en:"Can I get a refund for this?", ex_cn:"这个能退款吗？", scene:"购物"},
+    {en:"exchange", cn:"换货", ex_en:"I'd like to exchange this shirt.", ex_cn:"我想换一下这件衬衫。", scene:"购物"},
+    {en:"a bit expensive", cn:"有点贵", ex_en:"It's a bit expensive for me.", ex_cn:"对我来说有点贵。", scene:"购物"},
+    {en:"just looking", cn:"随便看看", ex_en:"Thanks, I'm just looking.", ex_cn:"谢谢，我随便看看。", scene:"购物"},
+    {en:"souvenir", cn:"纪念品", ex_en:"I want to buy some souvenirs.", ex_cn:"我想买些纪念品。", scene:"购物"},
+
+    // —— 钱 · 支付 ——
+    {en:"cash", cn:"现金", ex_en:"Do you take cash?", ex_cn:"你们收现金吗？", scene:"钱与支付"},
+    {en:"credit card", cn:"信用卡", ex_en:"Can I pay by credit card?", ex_cn:"我能刷信用卡吗？", scene:"钱与支付"},
+    {en:"exchange rate", cn:"汇率", ex_en:"What's today's exchange rate?", ex_cn:"今天的汇率是多少？", scene:"钱与支付"},
+    {en:"change", cn:"零钱 / 找零", ex_en:"Keep the change.", ex_cn:"不用找了。", scene:"钱与支付"},
+    {en:"ATM", cn:"自动取款机", ex_en:"Is there an ATM around here?", ex_cn:"这附近有取款机吗？", scene:"钱与支付"},
+    {en:"split the bill", cn:"AA / 分开付", ex_en:"Let's split the bill.", ex_cn:"我们AA吧。", scene:"钱与支付"},
+    {en:"currency", cn:"货币", ex_en:"Where can I change currency?", ex_cn:"哪里可以换钱？", scene:"钱与支付"},
+
+    // —— 应急 · 求助 ——
+    {en:"Excuse me", cn:"打扰一下 / 借过", ex_en:"Excuse me, can you help me?", ex_cn:"打扰一下，能帮我个忙吗？", scene:"应急求助"},
+    {en:"lost", cn:"迷路的 / 丢失的", ex_en:"I think I'm lost.", ex_cn:"我好像迷路了。", scene:"应急求助"},
+    {en:"help", cn:"帮助", ex_en:"Could you help me, please?", ex_cn:"你能帮帮我吗？", scene:"应急求助"},
+    {en:"emergency", cn:"紧急情况", ex_en:"This is an emergency!", ex_cn:"这是紧急情况！", scene:"应急求助"},
+    {en:"call the police", cn:"报警", ex_en:"Please call the police.", ex_cn:"请报警。", scene:"应急求助"},
+    {en:"stolen", cn:"被偷了", ex_en:"My wallet was stolen.", ex_cn:"我的钱包被偷了。", scene:"应急求助"},
+    {en:"pharmacy", cn:"药店", ex_en:"Where's the nearest pharmacy?", ex_cn:"最近的药店在哪？", scene:"应急求助"},
+    {en:"embassy", cn:"大使馆", ex_en:"I need to contact my embassy.", ex_cn:"我需要联系我的大使馆。", scene:"应急求助"},
+    {en:"first aid", cn:"急救", ex_en:"Do you have a first-aid kit?", ex_cn:"你们有急救包吗？", scene:"应急求助"},
+
+    // —— 观光 · 景点 ——
+    {en:"sightseeing", cn:"观光", ex_en:"We're here for sightseeing.", ex_cn:"我们是来观光的。", scene:"观光景点"},
+    {en:"landmark", cn:"地标", ex_en:"This tower is a famous landmark.", ex_cn:"这座塔是著名地标。", scene:"观光景点"},
+    {en:"admission", cn:"门票 / 入场费", ex_en:"How much is admission?", ex_cn:"门票多少钱？", scene:"观光景点"},
+    {en:"open hours", cn:"开放时间", ex_en:"What are the open hours?", ex_cn:"开放时间是几点到几点？", scene:"观光景点"},
+    {en:"guided tour", cn:"导览团", ex_en:"Is there a guided tour in English?", ex_cn:"有英文导览团吗？", scene:"观光景点"},
+    {en:"take a photo", cn:"拍照", ex_en:"Could you take a photo of us?", ex_cn:"能帮我们拍张照吗？", scene:"观光景点"},
+    {en:"view", cn:"景色 / 视野", ex_en:"The view up here is amazing.", ex_cn:"上面这景色太美了。", scene:"观光景点"},
+    {en:"crowded", cn:"拥挤的", ex_en:"It gets crowded on weekends.", ex_cn:"周末这里很挤。", scene:"观光景点"},
+    {en:"worth it", cn:"值得", ex_en:"The trip was totally worth it.", ex_cn:"这趟旅行太值了。", scene:"观光景点"},
+
+    // —— 社交 · 交友 ——
+    {en:"nice to meet you", cn:"很高兴认识你", ex_en:"Hi, nice to meet you!", ex_cn:"你好，很高兴认识你！", scene:"社交交友"},
+    {en:"What do you do?", cn:"你是做什么工作的？", ex_en:"So, what do you do?", ex_cn:"那你是做什么工作的？", scene:"社交交友"},
+    {en:"hang out", cn:"一起玩 / 消磨时间", ex_en:"Do you want to hang out later?", ex_cn:"待会儿想一起出去玩吗？", scene:"社交交友"},
+    {en:"keep in touch", cn:"保持联系", ex_en:"Let's keep in touch!", ex_cn:"我们保持联系！", scene:"社交交友"},
+    {en:"grab a drink", cn:"去喝一杯", ex_en:"Want to grab a drink tonight?", ex_cn:"今晚想去喝一杯吗？", scene:"社交交友"},
+    {en:"sounds good", cn:"听起来不错", ex_en:"Dinner at 7? Sounds good!", ex_cn:"七点吃晚饭？听起来不错！", scene:"社交交友"},
+    {en:"I'm in", cn:"算我一个", ex_en:"A weekend trip? I'm in!", ex_cn:"周末出游？算我一个！", scene:"社交交友"},
+    {en:"awesome", cn:"太棒了", ex_en:"That's awesome news!", ex_cn:"这消息太棒了！", scene:"社交交友"},
+
+    // —— 时间 · 天气 ——
+    {en:"What time", cn:"几点", ex_en:"What time is it now?", ex_cn:"现在几点了？", scene:"时间天气"},
+    {en:"on time", cn:"准时", ex_en:"The bus is right on time.", ex_cn:"公交车很准时。", scene:"时间天气"},
+    {en:"in a hurry", cn:"匆忙 / 赶时间", ex_en:"Sorry, I'm in a hurry.", ex_cn:"抱歉，我赶时间。", scene:"时间天气"},
+    {en:"forecast", cn:"天气预报", ex_en:"The forecast says rain tomorrow.", ex_cn:"预报说明天有雨。", scene:"时间天气"},
+    {en:"humid", cn:"潮湿的", ex_en:"It's really humid today.", ex_cn:"今天真潮。", scene:"时间天气"},
+    {en:"chilly", cn:"微冷的", ex_en:"It's a bit chilly tonight.", ex_cn:"今晚有点凉。", scene:"时间天气"},
+
+    // —— 通讯 · 网络 ——
+    {en:"Wi-Fi", cn:"无线网", ex_en:"What's the Wi-Fi password?", ex_cn:"Wi-Fi 密码是多少？", scene:"通讯网络"},
+    {en:"charger", cn:"充电器", ex_en:"Can I borrow a charger?", ex_cn:"能借个充电器吗？", scene:"通讯网络"},
+    {en:"signal", cn:"信号", ex_en:"There's no signal here.", ex_cn:"这里没信号。", scene:"通讯网络"},
+    {en:"SIM card", cn:"电话卡", ex_en:"Where can I buy a SIM card?", ex_cn:"哪里能买到电话卡？", scene:"通讯网络"},
+    {en:"data", cn:"流量", ex_en:"I'm running out of data.", ex_cn:"我流量快用完了。", scene:"通讯网络"},
+
+    // —— 身体 · 健康 ——
+    {en:"not feeling well", cn:"不舒服", ex_en:"I'm not feeling well today.", ex_cn:"我今天不太舒服。", scene:"身体健康"},
+    {en:"headache", cn:"头痛", ex_en:"I have a bad headache.", ex_cn:"我头很痛。", scene:"身体健康"},
+    {en:"fever", cn:"发烧", ex_en:"I think I have a fever.", ex_cn:"我好像发烧了。", scene:"身体健康"},
+    {en:"medicine", cn:"药", ex_en:"Do you have medicine for a cold?", ex_cn:"你有感冒药吗？", scene:"身体健康"},
+    {en:"see a doctor", cn:"看医生", ex_en:"You should see a doctor.", ex_cn:"你该去看看医生。", scene:"身体健康"},
+
+    // —— 日常高频动词 ——
+    {en:"make it", cn:"赶到 / 成功做到", ex_en:"Sorry, I can't make it tonight.", ex_cn:"抱歉，我今晚去不了。", scene:"日常动词"},
+    {en:"figure out", cn:"弄明白 / 想出", ex_en:"Let me figure out the route.", ex_cn:"我来弄清楚路线。", scene:"日常动词"},
+    {en:"check out", cn:"看看 / 体验", ex_en:"You should check out that market.", ex_cn:"你该去逛逛那个市场。", scene:"日常动词"},
+    {en:"show up", cn:"出现 / 露面", ex_en:"He didn't show up.", ex_cn:"他没来。", scene:"日常动词"},
+    {en:"pick up", cn:"接（人） / 拿取", ex_en:"I'll pick you up at 8.", ex_cn:"我八点来接你。", scene:"日常动词"},
+    {en:"drop off", cn:"送（人 / 东西）", ex_en:"Can you drop me off here?", ex_cn:"你能在这儿放我下车吗？", scene:"日常动词"},
+    {en:"run out of", cn:"用完 / 耗尽", ex_en:"We ran out of water.", ex_cn:"我们水喝完了。", scene:"日常动词"},
+    {en:"look forward to", cn:"期待", ex_en:"I look forward to the trip.", ex_cn:"我很期待这趟旅行。", scene:"日常动词"},
+    {en:"get along", cn:"相处融洽", ex_en:"We get along really well.", ex_cn:"我们相处得很好。", scene:"日常动词"},
+    {en:"work out", cn:"解决 / 健身", ex_en:"Don't worry, it'll work out.", ex_cn:"别担心，会解决的。", scene:"日常动词"},
+    {en:"give it a try", cn:"试一试", ex_en:"Just give it a try!", ex_cn:"试试看嘛！", scene:"日常动词"},
+    {en:"hang on", cn:"稍等 / 坚持", ex_en:"Hang on, I'll be right there.", ex_cn:"稍等，我马上到。", scene:"日常动词"},
+
+    // —— 日常高频形容词 · 感受 ——
+    {en:"exhausted", cn:"筋疲力尽的", ex_en:"I'm exhausted after the flight.", ex_cn:"下飞机后我累坏了。", scene:"感受形容"},
+    {en:"starving", cn:"饿极了", ex_en:"I'm starving, let's eat.", ex_cn:"我饿死了，吃饭吧。", scene:"感受形容"},
+    {en:"amazing", cn:"了不起的", ex_en:"The food here is amazing.", ex_cn:"这里的食物太赞了。", scene:"感受形容"},
+    {en:"gorgeous", cn:"极美的", ex_en:"What a gorgeous sunset!", ex_cn:"多美的日落啊！", scene:"感受形容"},
+    {en:"annoying", cn:"烦人的", ex_en:"The noise is really annoying.", ex_cn:"这噪音真烦人。", scene:"感受形容"},
+    {en:"convenient", cn:"方便的", ex_en:"The hotel is very convenient.", ex_cn:"这家酒店很方便。", scene:"感受形容"},
+    {en:"reasonable", cn:"合理的（价格）", ex_en:"The price is quite reasonable.", ex_cn:"价格挺合理的。", scene:"感受形容"},
+    {en:"unforgettable", cn:"难忘的", ex_en:"It was an unforgettable trip.", ex_cn:"这是一趟难忘的旅行。", scene:"感受形容"},
+
+    // —— 更多日常口语零件 ——
+    {en:"kind of", cn:"有点儿 / 算是", ex_en:"I'm kind of tired.", ex_cn:"我有点累。", scene:"口语零件"},
+    {en:"a bunch of", cn:"一堆 / 许多", ex_en:"We took a bunch of photos.", ex_cn:"我们拍了一堆照片。", scene:"口语零件"},
+    {en:"pretty much", cn:"差不多 / 基本上", ex_en:"We're pretty much ready.", ex_cn:"我们基本上准备好了。", scene:"口语零件"},
+    {en:"for sure", cn:"当然 / 肯定", ex_en:"\"Coming?\" \"For sure!\"", ex_cn:"“来吗？”“当然！”", scene:"口语零件"},
+    {en:"no big deal", cn:"没什么大不了", ex_en:"Relax, it's no big deal.", ex_cn:"放松，没什么大不了的。", scene:"口语零件"},
+    {en:"make sense", cn:"讲得通 / 有道理", ex_en:"That makes sense.", ex_cn:"这说得通。", scene:"口语零件"},
+    {en:"as soon as possible", cn:"尽快", ex_en:"Please reply as soon as possible.", ex_cn:"请尽快回复。", scene:"口语零件"},
+    {en:"up to you", cn:"你决定", ex_en:"Where to eat? It's up to you.", ex_cn:"去哪吃？你决定。", scene:"口语零件"}
+  ],
+  patterns: [
+    // —— 礼貌请求 · 问询 ——
+    {en:"Could you tell me where ... is?", cn:"你能告诉我……在哪吗？", ex_en:"Could you tell me where the restroom is?", ex_cn:"你能告诉我洗手间在哪吗？", scene:"礼貌问路"},
+    {en:"Do you know if there's a ... nearby?", cn:"附近有没有……你知道吗？", ex_en:"Do you know if there's a supermarket nearby?", ex_cn:"你知道附近有超市吗？", scene:"打听地点"},
+    {en:"Would it be possible to ...?", cn:"能不能……？（礼貌）", ex_en:"Would it be possible to change my room?", ex_cn:"能不能给我换个房间？", scene:"礼貌请求"},
+    {en:"Can I get ..., please?", cn:"请给我……好吗？", ex_en:"Can I get a glass of water, please?", ex_cn:"请给我一杯水好吗？", scene:"点餐购物"},
+    {en:"I'd like to ...", cn:"我想要……", ex_en:"I'd like to book a table for two.", ex_cn:"我想订一张两人桌。", scene:"表达需求"},
+    {en:"How much does it cost to ...?", cn:"……要多少钱？", ex_en:"How much does it cost to get downtown?", ex_cn:"去市中心要多少钱？", scene:"问价格"},
+    {en:"Is it okay if I ...?", cn:"我……可以吗？", ex_en:"Is it okay if I sit here?", ex_cn:"我坐这儿可以吗？", scene:"礼貌征求"},
+    {en:"Do you mind ...ing?", cn:"你介意……吗？", ex_en:"Do you mind taking a photo of us?", ex_cn:"你介意帮我们拍张照吗？", scene:"礼貌请求"},
+
+    // —— 听不懂 · 求助 ——
+    {en:"Sorry, could you say that again?", cn:"抱歉，你能再说一遍吗？", ex_en:"Sorry, could you say that again, please?", ex_cn:"抱歉，能麻烦你再说一遍吗？", scene:"没听清"},
+    {en:"Could you speak more slowly?", cn:"你能说慢一点吗？", ex_en:"Could you speak more slowly, please?", ex_cn:"能麻烦你说慢点吗？", scene:"没听清"},
+    {en:"I'm not sure I understand.", cn:"我不太明白。", ex_en:"I'm not sure I understand. Can you show me?", ex_cn:"我不太懂，你能指给我看吗？", scene:"没听懂"},
+    {en:"How do you say ... in English?", cn:"……用英语怎么说？", ex_en:"How do you say this dish in English?", ex_cn:"这道菜用英语怎么说？", scene:"求助表达"},
+    {en:"Can you write it down for me?", cn:"你能帮我写下来吗？", ex_en:"Can you write the address down for me?", ex_cn:"你能把地址写下来给我吗？", scene:"求助表达"},
+    {en:"I don't speak much English.", cn:"我英语说得不多。", ex_en:"Sorry, I don't speak much English.", ex_cn:"抱歉，我英语不太好。", scene:"自我说明"},
+
+    // —— 餐厅 · 酒店实用 ——
+    {en:"Do you have a table for ...?", cn:"有……人的桌子吗？", ex_en:"Do you have a table for three?", ex_cn:"有三人桌吗？", scene:"餐厅"},
+    {en:"What do you recommend?", cn:"你推荐什么？", ex_en:"I'm not sure — what do you recommend?", ex_cn:"我拿不定主意，你推荐什么？", scene:"餐厅"},
+    {en:"Could we have the bill, please?", cn:"能买单吗？", ex_en:"Excuse me, could we have the bill, please?", ex_cn:"不好意思，能买单吗？", scene:"餐厅"},
+    {en:"I have a reservation under ...", cn:"我用……的名字订了房。", ex_en:"Hi, I have a reservation under Ruan.", ex_cn:"你好，我用阮的名字订了房。", scene:"酒店"},
+    {en:"What time is check-out?", cn:"几点退房？", ex_en:"By the way, what time is check-out?", ex_cn:"顺便问下，几点退房？", scene:"酒店"},
+
+    // —— 交通 · 方向 ——
+    {en:"How do I get to ...?", cn:"我怎么去……？", ex_en:"Excuse me, how do I get to the old town?", ex_cn:"打扰一下，我怎么去老城区？", scene:"交通"},
+    {en:"Does this bus go to ...?", cn:"这趟车到……吗？", ex_en:"Does this bus go to the airport?", ex_cn:"这趟公交到机场吗？", scene:"交通"},
+    {en:"Please take me to ...", cn:"请载我去……", ex_en:"Please take me to this address.", ex_cn:"请载我到这个地址。", scene:"打车"},
+    {en:"Could you let me know when we get to ...?", cn:"到……时能提醒我一下吗？", ex_en:"Could you let me know when we get to the museum?", ex_cn:"到博物馆时能提醒我一下吗？", scene:"交通"},
+    {en:"Which way is ...?", cn:"……往哪个方向走？", ex_en:"Which way is the beach?", ex_cn:"海滩往哪边走？", scene:"问路"},
+
+    // —— 购物 · 讨价 ——
+    {en:"Do you have this in ...?", cn:"这个有……（颜色/尺码）的吗？", ex_en:"Do you have this in blue?", ex_cn:"这个有蓝色的吗？", scene:"购物"},
+    {en:"Can you give me a discount?", cn:"能便宜点吗？", ex_en:"It's a bit pricey — can you give me a discount?", ex_cn:"有点贵，能便宜点吗？", scene:"讨价还价"},
+    {en:"I'll take it.", cn:"我要了。", ex_en:"It fits perfectly — I'll take it.", ex_cn:"很合身，我要了。", scene:"购物"},
+    {en:"Can I pay by ...?", cn:"我能用……付款吗？", ex_en:"Can I pay by card?", ex_cn:"我能刷卡吗？", scene:"支付"},
+
+    // —— 社交 · 寒暄 ——
+    {en:"Where are you from?", cn:"你是哪里人？", ex_en:"Nice to meet you! Where are you from?", ex_cn:"很高兴认识你！你是哪里人？", scene:"社交"},
+    {en:"Is this your first time in ...?", cn:"这是你第一次来……吗？", ex_en:"Is this your first time in China?", ex_cn:"这是你第一次来中国吗？", scene:"社交"},
+    {en:"What brings you here?", cn:"你怎么会来这儿？", ex_en:"So, what brings you here?", ex_cn:"那你怎么会来这儿呢？", scene:"社交"},
+    {en:"Let's keep in touch.", cn:"我们保持联系吧。", ex_en:"It was great meeting you — let's keep in touch.", ex_cn:"认识你真好，我们保持联系吧。", scene:"社交"},
+    {en:"Do you want to ... together?", cn:"要不要一起……？", ex_en:"Do you want to grab lunch together?", ex_cn:"要不要一起去吃午饭？", scene:"社交"},
+
+    // —— 表达观点 · 应对 ——
+    {en:"To be honest, ...", cn:"说实话，……", ex_en:"To be honest, I'm not a big fan of it.", ex_cn:"说实话，我不太喜欢。", scene:"表态"},
+    {en:"That sounds great!", cn:"听起来很棒！", ex_en:"A road trip? That sounds great!", ex_cn:"自驾游？听起来很棒！", scene:"回应"},
+    {en:"I'm afraid I can't ...", cn:"恐怕我不能……", ex_en:"I'm afraid I can't make it tomorrow.", ex_cn:"恐怕我明天来不了。", scene:"婉拒"},
+    {en:"No problem at all.", cn:"完全没问题。", ex_en:"\"Can you wait a bit?\" \"No problem at all.\"", ex_cn:"“能等一下吗？”“完全没问题。”", scene:"回应"},
+    {en:"It's up to you.", cn:"你来决定。", ex_en:"Wherever you like — it's up to you.", ex_cn:"你喜欢哪儿都行，你决定。", scene:"回应"},
+
+    // —— 应急 · 麻烦 ——
+    {en:"Can you help me? I'm lost.", cn:"能帮帮我吗？我迷路了。", ex_en:"Excuse me, can you help me? I'm lost.", ex_cn:"打扰一下，能帮帮我吗？我迷路了。", scene:"应急"},
+    {en:"I think I left my ... in ...", cn:"我好像把……落在……了。", ex_en:"I think I left my phone in the taxi.", ex_cn:"我好像把手机落在出租车上了。", scene:"应急"},
+    {en:"Could you call ... for me?", cn:"你能帮我打电话给……吗？", ex_en:"Could you call an ambulance for me?", ex_cn:"你能帮我叫救护车吗？", scene:"应急"},
+    {en:"Where's the nearest ...?", cn:"最近的……在哪？", ex_en:"Where's the nearest hospital?", ex_cn:"最近的医院在哪？", scene:"应急"}
+  ]
+};
+
+/* ===== 计算“今天是第几天”，切出今日一组 ===== */
+function beijingDayIndex(){
+  // 用北京时间的日期算“天数序号”，保证同一天所有人一致
+  const nowUTC = Date.now();
+  const bj = new Date(nowUTC + 8*3600*1000); // 偏到北京时间
+  const y = bj.getUTCFullYear(), m = bj.getUTCMonth(), d = bj.getUTCDate();
+  return Math.floor(Date.UTC(y, m, d) / (86400*1000)); // 距 1970-01-01 的天数
+}
+function pickToday(arr, perDay, dayIdx){
+  const n = arr.length;
+  const start = (dayIdx * perDay) % n;
+  const out = [];
+  for(let i=0;i<perDay;i++){ out.push(arr[(start+i)%n]); }
+  return out;
+}
+function dateLabel(){
+  const bj = new Date(Date.now() + 8*3600*1000);
+  const y=bj.getUTCFullYear(), m=bj.getUTCMonth()+1, d=bj.getUTCDate();
+  const wk=["周日","周一","周二","周三","周四","周五","周六"][bj.getUTCDay()];
+  return `${y}年${m}月${d}日 · ${wk}`;
+}
+
+const DAY = beijingDayIndex();
+const DATESTR = dateLabel();
+const DATA = {
+  words: pickToday(POOL.words, WORDS_PER_DAY, DAY),
+  patterns: pickToday(POOL.patterns, PATTERNS_PER_DAY, DAY)
+};
+
+/* ===== 逻辑 ===== */
+let deck = "words";
+let idx = 0;
+let flipped = false;
+const KEY = "rxb-daily-en-known-" + DAY;   // 进度按“天”存；rxb- 前缀确保与其它站隔离
+let known = JSON.parse(localStorage.getItem(KEY) || "{}");
+
+function list(){ return DATA[deck]; }
+function knownSet(){ known[deck] = known[deck] || []; return known[deck]; }
+function save(){ localStorage.setItem(KEY, JSON.stringify(known)); }
+
+function render(){
+  const arr = list(), n = arr.length;
+  document.getElementById("pos").textContent = (Math.min(idx,n-1)+1) + " / " + n;
+  document.getElementById("known").textContent = knownSet().length;
+  document.getElementById("barfill").style.width = Math.round(knownSet().length/n*100) + "%";
+  const stage = document.getElementById("stage");
+
+  if(idx >= n){
+    stage.innerHTML = `<div class="card"><div class="done"><div class="big">🎉</div>
+      <h2>今日这组过完啦</h2><p>已掌握 ${knownSet().length}/${n} · 明天自动换新一组</p>
+      <div class="btns" style="margin-top:18px"><button class="btn" onclick="restart(false)">再过一遍</button>
+      <button class="btn good" onclick="restart(true)">洗牌重练</button></div></div></div>`;
+    return;
+  }
+  const item = arr[idx];
+  const isKnown = knownSet().includes(item.en);
+  if(!flipped){
+    stage.innerHTML = `<div class="card enter" onclick="flip()">
+      <div class="front">
+        ${isKnown?'<div class="badge">✓ 已掌握</div>':''}
+        <div class="en">${item.en}</div>
+        <button class="spk" onclick="event.stopPropagation();speakCurrent(this)" title="听发音">🔊</button>
+        <div class="tip">点卡片看释义和例句 👆<br>点 🔊 听发音</div>
+      </div></div>`;
+  } else {
+    stage.innerHTML = `<div class="card flipping">
+      <div class="back">
+        <div class="en-row"><div class="en">${item.en}</div>
+          <button class="spk-sm" onclick="speakCurrent(this)" title="听发音">🔊</button></div>
+        <div class="cn">${item.cn}</div>
+        <div class="row"><div class="lb">例句 EXAMPLE</div><div class="ex-en">${item.ex_en}</div><div class="ex-cn">${item.ex_cn}</div></div>
+        <div class="row"><div class="lb">场景 WHEN TO USE</div><div class="scene">${item.scene}</div></div>
+      </div>
+      <div class="btns">
+        <button class="btn again" onclick="mark(false)">✗ 再练</button>
+        <button class="btn good" onclick="mark(true)">✓ 记住了</button>
+      </div>
+      <div class="foot"><button class="lnk" onclick="prev()">← 上一个</button><button class="lnk" onclick="next()">跳过 →</button></div>
+    </div>`;
+  }
+}
+/* ===== 发音：浏览器语音合成 ===== */
+function speakCurrent(btn){
+  const item = list()[idx]; if(!item) return;
+  // 去掉括号注释，让发音更自然
+  const text = item.en.replace(/\([^)]*\)/g,' ').replace(/\s+/g,' ').trim();
+  speak(text, btn);
+}
+function speak(text, btn){
+  if(!('speechSynthesis' in window)){ return; }
+  try{
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US'; u.rate = 0.9; u.pitch = 1;
+    if(btn){ btn.classList.add('playing');
+      u.onend = ()=>btn.classList.remove('playing');
+      u.onerror = ()=>btn.classList.remove('playing'); }
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+function flip(){ flipped = true; render(); if(deck==='words'){ setTimeout(()=>speakCurrent(document.querySelector('.spk-sm')),120); } }
+function next(){ idx++; flipped=false; render(); }
+function prev(){ if(idx>0){idx--; flipped=false; render();} }
+function mark(good){
+  const item = list()[idx];
+  const s = knownSet();
+  if(good){ if(!s.includes(item.en)) s.push(item.en); recordReview(item.en); }
+  else { const i=s.indexOf(item.en); if(i>=0) s.splice(i,1); }
+  save(); drawMemory(); next();
+}
+function restart(shuffle){
+  idx=0; flipped=false;
+  if(shuffle){ DATA[deck].sort(()=>Math.random()-0.5); }
+  render();
+}
+document.querySelectorAll(".tab").forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
+    t.classList.add("on");
+    deck = t.dataset.deck; idx=0; flipped=false; render();
+  };
+});
+document.getElementById("today").textContent = DATESTR;
+
+/* ===== 星空：闪烁星点 + 流星 ===== */
+(function buildSky(){
+  const sky = document.getElementById("sky");
+  if(!sky) return;
+  const H = Math.max(window.innerHeight, 700);
+  const topZone = H * 0.5;              // 星点集中在上半屏（露出星空区）
+  const n = window.innerWidth < 480 ? 46 : 70;
+  let html = "";
+  for(let i=0;i<n;i++){
+    const size = (Math.random()*2.2 + 0.6).toFixed(1);
+    const left = (Math.random()*100).toFixed(2);
+    const top  = (Math.random()*topZone).toFixed(0);
+    const dur  = (Math.random()*3 + 2).toFixed(1);
+    const delay= (Math.random()*4).toFixed(1);
+    html += `<span class="star" style="width:${size}px;height:${size}px;left:${left}%;top:${top}px;--tw:${dur}s;animation-delay:${delay}s"></span>`;
+  }
+  sky.innerHTML = html;
+  // 流星：随机间隔从上方划过
+  function shootMeteor(){
+    const m = document.createElement("div");
+    m.className = "meteor";
+    m.style.left = (30 + Math.random()*60) + "%";
+    m.style.top  = (Math.random()*topZone*0.6) + "px";
+    m.style.animation = `shoot ${ (1.1+Math.random()*0.8).toFixed(2) }s linear`;
+    sky.appendChild(m);
+    setTimeout(()=>m.remove(), 2200);
+    setTimeout(shootMeteor, 3500 + Math.random()*5000);
+  }
+  setTimeout(shootMeteor, 1800);
+})();
+
+/* ===== 记忆曲线引擎（艾宾浩斯 + 间隔复习） ===== */
+const MEM_KEY = "rxb-daily-en-memlog";     // rxb- 前缀确保与其它站隔离；{ "<word>": [dayIdx,...] }
+function loadMem(){ try{ return JSON.parse(localStorage.getItem(MEM_KEY)||"{}"); }catch(e){ return {}; } }
+function saveMem(m){ localStorage.setItem(MEM_KEY, JSON.stringify(m)); }
+function recordReview(word){
+  const m = loadMem();
+  const arr = m[word] || (m[word]=[]);
+  if(arr[arr.length-1] !== DAY) arr.push(DAY);   // 同一天不重复计
+  saveMem(m);
+}
+// 稳定度：复习次数越多，记忆保持越久（间隔效应）
+function stability(n){ return 1.6 * Math.pow(1.9, Math.max(0,n-1)); }
+// 单词当前留存率 R = e^(-经过天数 / 稳定度)
+function retentionOf(reviews){
+  if(!reviews||!reviews.length) return 0;
+  const n = reviews.length;
+  const d = Math.max(0, DAY - reviews[reviews.length-1]);
+  return Math.exp(-d / stability(n));
+}
+function memStats(){
+  const m = loadMem();
+  const words = Object.keys(m);
+  if(!words.length) return {learned:0, retain:null, due:0, avgGap:0};
+  let sum=0, due=0, gapSum=0;
+  words.forEach(w=>{
+    const r = retentionOf(m[w]); sum += r;
+    if(r < 0.65) due++;
+    gapSum += Math.max(0, DAY - m[w][m[w].length-1]);
+  });
+  return {learned:words.length, retain:sum/words.length, due, avgGap:gapSum/words.length};
+}
+
+function drawMemory(){
+  const st = memStats();
+  document.getElementById("msLearned").textContent = st.learned;
+  document.getElementById("msRetain").textContent = st.retain==null ? "—" : Math.round(st.retain*100)+"%";
+  document.getElementById("msDue").textContent = st.due;
+  const tip = document.getElementById("memTip");
+  if(st.learned===0){ tip.innerHTML = '开始学习后，这里会显示你的记忆强度变化 👆'; }
+  else if(st.due>0){ tip.innerHTML = `你有 <b>${st.due}</b> 个词记忆正在衰退，<b>今天再过一遍</b>能把曲线重新拉满 🔁`; }
+  else { tip.innerHTML = `记忆强度 <b>${Math.round(st.retain*100)}%</b>，保持得很好！按 1→3→7→15 天节奏复习最省力 🌟`; }
+
+  const cv = document.getElementById("memChart");
+  const dpr = window.devicePixelRatio || 1;
+  const cssW = cv.clientWidth || 320, cssH = 180;
+  cv.width = cssW*dpr; cv.height = cssH*dpr;
+  const ctx = cv.getContext("2d"); ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,cssW,cssH);
+
+  const padL=34, padR=12, padT=14, padB=26;
+  const W = cssW-padL-padR, Hc = cssH-padT-padB;
+  const DAYS = 30;
+  const X = t => padL + (t/DAYS)*W;
+  const Y = r => padT + (1-r)*Hc;
+
+  // 网格 + Y 轴刻度
+  ctx.strokeStyle="#eef3f8"; ctx.fillStyle="#94a3b8"; ctx.font="10px -apple-system,sans-serif";
+  [0,.25,.5,.75,1].forEach(r=>{
+    ctx.beginPath(); ctx.moveTo(padL,Y(r)); ctx.lineTo(padL+W,Y(r)); ctx.stroke();
+    ctx.fillText(Math.round(r*100)+"%", 4, Y(r)+3);
+  });
+  // X 轴天数
+  ctx.textAlign="center";
+  [0,7,15,30].forEach(t=>{ ctx.fillText(t+"天", X(t), cssH-8); });
+  ctx.textAlign="start";
+
+  // 遗忘曲线（不复习）——橙色虚线
+  ctx.strokeStyle="#f59e0b"; ctx.lineWidth=2; ctx.setLineDash([5,4]); ctx.beginPath();
+  for(let t=0;t<=DAYS;t++){ const r=Math.exp(-t/1.8); (t?ctx.lineTo(X(t),Y(r)):ctx.moveTo(X(t),Y(r))); }
+  ctx.stroke(); ctx.setLineDash([]);
+
+  // 间隔复习曲线——绿色实线（在 1/3/7/15 天复习，每次拉回满格且衰减更慢）
+  const reviewDays=[0,1,3,7,15]; ctx.strokeStyle="#10b981"; ctx.lineWidth=2.6; ctx.beginPath();
+  let started=false;
+  for(let t=0;t<=DAYS;t++){
+    // 找到 t 之前最近一次复习
+    let last=0, n=0;
+    for(let k=0;k<reviewDays.length;k++){ if(reviewDays[k]<=t){ last=reviewDays[k]; n=k+1; } }
+    const r = Math.exp(-(t-last)/stability(n));
+    started?ctx.lineTo(X(t),Y(r)):ctx.moveTo(X(t),Y(r)); started=true;
+  }
+  ctx.stroke();
+  // 复习点小圆
+  ctx.fillStyle="#10b981";
+  reviewDays.forEach(t=>{ ctx.beginPath(); ctx.arc(X(t),Y(1),3,0,7); ctx.fill(); });
+
+  // “你现在”的记忆强度点——蓝色
+  if(st.retain!=null){
+    const px=X(Math.min(st.avgGap,DAYS)), py=Y(st.retain);
+    ctx.fillStyle="rgba(59,130,246,.22)"; ctx.beginPath(); ctx.arc(px,py,9,0,7); ctx.fill();
+    ctx.fillStyle="#3b82f6"; ctx.beginPath(); ctx.arc(px,py,5,0,7); ctx.fill();
+    ctx.strokeStyle="#fff"; ctx.lineWidth=2; ctx.stroke();
+  }
+}
+window.addEventListener("resize", ()=>{ drawMemory(); });
+
+render();
+drawMemory();
+</script>
+</body>
+</html>
